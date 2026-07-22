@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TACTIGRID AI - Command Deck</title>
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand-mark">
+      <div class="dot"><span></span></div>
+      <div class="label" style="color: var(--text);">TACTIGRID AI <span style="color: var(--text-dim); font-weight: 400;">&middot; COMMAND DECK</span></div>
+    </div>
+    <div class="classification">// UNCLASSIFIED - TRAINING USE ONLY //</div>
+    <div class="right">
+      <span class="badge-pill" id="userBadge">ADMIN</span>
+      <button type="button" class="sign-out" id="signOutBtn">SIGN OUT</button>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <div class="workspace-header">
+      <div>
+        <div class="eyebrow">MISSION WORKSPACE</div>
+        <h2>Structures &amp; Analyses</h2>
+      </div>
+      <button type="button" class="btn" id="clearListBtn">CLEAR ALL</button>
+    </div>
+
+    <div class="upload-box" id="uploadBox">
+      <div class="left">
+        <div class="upload-icon">&uarr;</div>
+        <div>
+          <div class="title">Drop a Pano2VR tour package (.ggpkg)</div>
+          <div class="subtitle">Nodes, hotspots and the floorplan are auto-parsed on upload.</div>
+        </div>
+      </div>
+      <div>
+        <input type="file" id="ggpkgInput" accept=".ggpkg" style="display:none">
+        <button type="button" class="btn btn-primary" id="browseBtn">BROWSE FILES</button>
+      </div>
+    </div>
+
+    <form id="addPersonnelForm" class="new-entry-form">
+      <div class="field">
+        <label for="projectSelect">PROJECT</label>
+        <select id="projectSelect" required>
+          <option value="">Loading projects...</option>
+        </select>
+      </div>
+      <div class="field" id="newProjectField" style="display: none;">
+        <label for="newProjectName">NEW PROJECT NAME</label>
+        <input type="text" id="newProjectName" placeholder="e.g. CTW">
+      </div>
+      <div class="field">
+        <label for="location">LOCATION / STRUCTURE NAME</label>
+        <input type="text" id="location" required>
+      </div>
+      <div class="field">
+        <label for="sno">TES NO <span style="color: var(--text-dim); font-weight: 400;">(optional)</span></label>
+        <input type="number" id="sno">
+      </div>
+      <div class="field">
+        <label for="name">NAME <span style="color: var(--text-dim); font-weight: 400;">(optional)</span></label>
+        <input type="text" id="name">
+      </div>
+      <div class="full-row">
+        <span id="selectedFileLabel" style="font-family: var(--font-mono); font-size: 0.78em; color: var(--text-dim); margin-right: auto;"></span>
+        <button type="button" class="btn" id="cancelUploadBtn">CANCEL</button>
+        <button type="submit" class="btn btn-primary">SAVE STRUCTURE</button>
+      </div>
+    </form>
+
+    <div class="stat-grid">
+      <div class="stat-tile">
+        <div class="label">PROJECTS</div>
+        <div class="value" id="statProjects">-</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">STRUCTURES</div>
+        <div class="value" id="statStructures">-</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">NODES MAPPED</div>
+        <div class="value mint" id="statNodes">-</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">NAMED LOCATIONS</div>
+        <div class="value mint" id="statLocations">-</div>
+      </div>
+    </div>
+
+    <div id="projectGroups"></div>
+  </div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# Regenerated on the target machine — not transferred.
+# (node_modules via `npm install`; tiles re-cache on demand)
+node_modules/
+tilecache/
+*.tgcache.json
+
+# Credentials — the server re-seeds admin/user defaults on first run.
+# Change them with: node setPassword.js admin <new-password>
+users.json
+
+# OS / editor junk
+Thumbs.db
+.DS_Store
+
+# NOTE: This is a PRIVATE transfer repo. The site imagery (uploads/),
+# coordinates (geodata.json), tactical analysis (vlmdata.json),
+# detection cache (scenedata.json), personnel records (personnel.json)
+# and the model (models/) ARE intentionally included so the project runs
+# as-is on the new laptop. Keep this repository private — it contains real
+# site data. Do not make it public.

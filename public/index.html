@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TACTIGRID AI - Authenticate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-shell">
+    <div class="auth-brand">
+      <div class="brand-mark">
+        <div class="dot"><span></span></div>
+        <div class="label">TACTICAL INTELLIGENCE SUITE</div>
+      </div>
+
+      <h1>TACTIGRID <span class="accent">AI</span></h1>
+      <p class="tagline">AI-powered indoor mapping &amp; tactical analysis.</p>
+
+      <div class="tech-tags">
+        <span class="live">Isovist / Dijkstra</span>
+        <span class="live">Pano2VR tours</span>
+        <span class="planned">YOLOv11 &middot; planned</span>
+        <span class="planned">Grounding DINO &middot; planned</span>
+      </div>
+
+      <div class="node-status">
+        <span>SERVER <span id="serverStatus" class="pending">CHECKING</span></span>
+        <span>BUILD v0.1.0</span>
+      </div>
+    </div>
+
+    <div class="auth-panel">
+      <div class="auth-card">
+        <div class="eyebrow">SECURE ACCESS</div>
+        <h2>Authenticate</h2>
+
+        <div class="role-toggle">
+          <button type="button" class="active" data-role="user" id="roleOperator">OPERATOR</button>
+          <button type="button" data-role="admin" id="roleAdmin">ADMIN</button>
+        </div>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="username">CALLSIGN / ID</label>
+            <input type="text" id="username" placeholder="e.g. admin" required>
+          </div>
+          <div class="field">
+            <label for="password">PASSPHRASE</label>
+            <input type="password" id="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required>
+          </div>
+          <button type="submit" class="auth-submit">AUTHENTICATE &amp; ENTER &rarr;</button>
+          <p id="errorMessage" class="auth-error"></p>
+        </form>
+
+        <p class="auth-footnote">// TRAINING &amp; SIMULATION USE ONLY</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

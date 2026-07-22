@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TACTIGRID AI - Command Deck</title>
+    <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand-mark">
+      <div class="dot"><span></span></div>
+      <div class="label" style="color: var(--text);">TACTIGRID AI <span style="color: var(--text-dim); font-weight: 400;">&middot; COMMAND DECK</span></div>
+    </div>
+    <div class="classification">// UNCLASSIFIED - TRAINING USE ONLY //</div>
+    <div class="right">
+      <span class="badge-pill" id="userBadge">OPERATOR</span>
+      <button type="button" class="sign-out" id="signOutBtn">SIGN OUT</button>
+    </div>
+  </div>
+
+  <div class="workspace">
+    <div class="workspace-header">
+      <div>
+        <div class="eyebrow">MISSION WORKSPACE</div>
+        <h2>Structures &amp; Analyses</h2>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-tile">
+        <div class="label">PROJECTS</div>
+        <div class="value" id="statProjects">-</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">STRUCTURES</div>
+        <div class="value" id="statStructures">-</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">NODES MAPPED</div>
+        <div class="value mint" id="statNodes">-</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">NAMED LOCATIONS</div>
+        <div class="value mint" id="statLocations">-</div>
+      </div>
+    </div>
+
+    <div id="projectGroups"></div>
+  </div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

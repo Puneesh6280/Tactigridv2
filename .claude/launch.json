@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "tactigrid-server",
+      "runtimeExecutable": "C:\\Users\\DELL\\AppData\\Local\\OpenAI\\Codex\\bin\\node.exe",
+      "runtimeArgs": ["server.js"],
+      "port": 3000,
+      "env": {
+        "TACTIGRID_PYTHON": "C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
+      }
+    }
+  ]
+}

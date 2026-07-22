@@ -1,0 +1,349 @@
+{
+  "CTW/Main Gate": {
+    "node56": {
+      "ok": true,
+      "objectCount": 6,
+      "summary": [
+        {
+          "label": "person",
+          "count": 2
+        },
+        {
+          "label": "potted plant",
+          "count": 2
+        },
+        {
+          "label": "car",
+          "count": 1
+        },
+        {
+          "label": "bench",
+          "count": 1
+        }
+      ],
+      "faces": [
+        {
+          "face": "cf_0",
+          "direction": "front",
+          "detections": [
+            {
+              "label": "person",
+              "confidence": 0.571,
+              "box": [
+                0.5371,
+                0.656,
+                0.086,
+                0.1189
+              ]
+            },
+            {
+              "label": "person",
+              "confidence": 0.556,
+              "box": [
+                0.5135,
+                0.6577,
+                0.1459,
+                0.3415
+              ]
+            }
+          ]
+        },
+        {
+          "face": "cf_1",
+          "direction": "right",
+          "detections": [
+            {
+              "label": "potted plant",
+              "confidence": 0.587,
+              "box": [
+                0.6349,
+                0.5312,
+                0.0363,
+                0.0683
+              ]
+            }
+          ]
+        },
+        {
+          "face": "cf_2",
+          "direction": "back",
+          "detections": []
+        },
+        {
+          "face": "cf_3",
+          "direction": "left",
+          "detections": [
+            {
+              "label": "potted plant",
+              "confidence": 0.545,
+              "box": [
+                0.8482,
+                0.5767,
+                0.0944,
+                0.1172
+              ]
+            },
+            {
+              "label": "car",
+              "confidence": 0.37,
+              "box": [
+                0.5438,
+                0.4798,
+                0.0388,
+                0.0245
+              ]
+            },
+            {
+              "label": "bench",
+              "confidence": 0.352,
+              "box": [
+                0.4486,
+                0.6096,
+                0.258,
+                0.1653
+              ]
+            }
+          ]
+        },
+        {
+          "face": "cf_4",
+          "direction": "up",
+          "detections": []
+        },
+        {
+          "face": "cf_5",
+          "direction": "down",
+          "detections": []
+        }
+      ],
+      "classesModel": "COCO-80 (general objects; doors/windows not in this model)",
+      "analyzedAt": "2026-07-22T10:04:30.899Z"
+    },
+    "node16": {
+      "ok": true,
+      "objectCount": 1,
+      "summary": [
+        {
+          "label": "kite",
+          "count": 1
+        }
+      ],
+      "faces": [
+        {
+          "face": "cf_0",
+          "direction": "front",
+          "detections": []
+        },
+        {
+          "face": "cf_1",
+          "direction": "right",
+          "detections": []
+        },
+        {
+          "face": "cf_2",
+          "direction": "back",
+          "detections": []
+        },
+        {
+          "face": "cf_3",
+          "direction": "left",
+          "detections": []
+        },
+        {
+          "face": "cf_4",
+          "direction": "up",
+          "detections": []
+        },
+        {
+          "face": "cf_5",
+          "direction": "down",
+          "detections": [
+            {
+              "label": "kite",
+              "confidence": 0.437,
+              "box": [
+                0.1758,
+                0.259,
+                0.0463,
+                0.0326
+              ]
+            }
+          ]
+        }
+      ],
+      "classesModel": "COCO-80 (general objects; doors/windows not in this model)",
+      "analyzedAt": "2026-07-22T10:41:43.646Z"
+    },
+    "node51": {
+      "ok": true,
+      "objectCount": 2,
+      "summary": [
+        {
+          "label": "bench",
+          "count": 1
+        },
+        {
+          "label": "person",
+          "count": 1
+        }
+      ],
+      "faces": [
+        {
+          "face": "cf_0",
+          "direction": "front",
+          "detections": []
+        },
+        {
+          "face": "cf_1",
+          "direction": "right",
+          "detections": [
+            {
+              "label": "bench",
+              "confidence": 0.698,
+              "box": [
+                0.4898,
+                0.5526,
+                0.1672,
+                0.0664
+              ]
+            }
+          ]
+        },
+        {
+          "face": "cf_2",
+          "direction": "back",
+          "detections": []
+        },
+        {
+          "face": "cf_3",
+          "direction": "left",
+          "detections": []
+        },
+        {
+          "face": "cf_4",
+          "direction": "up",
+          "detections": []
+        },
+        {
+          "face": "cf_5",
+          "direction": "down",
+          "detections": [
+            {
+              "label": "person",
+              "confidence": 0.487,
+              "box": [
+                0.4241,
+                0.408,
+                0.162,
+                0.162
+              ]
+            }
+          ]
+        }
+      ],
+      "classesModel": "COCO-80 (general objects; doors/windows not in this model)",
+      "analyzedAt": "2026-07-22T10:45:04.976Z"
+    },
+    "node26": {
+      "ok": true,
+      "objectCount": 5,
+      "summary": [
+        {
+          "label": "potted plant",
+          "count": 4
+        },
+        {
+          "label": "fire hydrant",
+          "count": 1
+        }
+      ],
+      "faces": [
+        {
+          "face": "cf_0",
+          "direction": "front",
+          "detections": [
+            {
+              "label": "potted plant",
+              "confidence": 0.378,
+              "box": [
+                0.9445,
+                0.5156,
+                0.0459,
+                0.0598
+              ]
+            }
+          ]
+        },
+        {
+          "face": "cf_1",
+          "direction": "right",
+          "detections": []
+        },
+        {
+          "face": "cf_2",
+          "direction": "back",
+          "detections": [
+            {
+              "label": "potted plant",
+              "confidence": 0.877,
+              "box": [
+                0.1404,
+                0.5503,
+                0.0407,
+                0.0468
+              ]
+            },
+            {
+              "label": "potted plant",
+              "confidence": 0.588,
+              "box": [
+                0.2868,
+                0.5416,
+                0.0321,
+                0.0425
+              ]
+            }
+          ]
+        },
+        {
+          "face": "cf_3",
+          "direction": "left",
+          "detections": [
+            {
+              "label": "fire hydrant",
+              "confidence": 0.815,
+              "box": [
+                0.6352,
+                0.5199,
+                0.0286,
+                0.0555
+              ]
+            },
+            {
+              "label": "potted plant",
+              "confidence": 0.463,
+              "box": [
+                0.8666,
+                0.5,
+                0.0667,
+                0.0884
+              ]
+            }
+          ]
+        },
+        {
+          "face": "cf_4",
+          "direction": "up",
+          "detections": []
+        },
+        {
+          "face": "cf_5",
+          "direction": "down",
+          "detections": []
+        }
+      ],
+      "classesModel": "COCO-80 (general objects; doors/windows not in this model)",
+      "analyzedAt": "2026-07-22T10:56:51.511Z"
+    }
+  }
+}

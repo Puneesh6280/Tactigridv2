@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+		<title>TACTIGRID</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<script src="pano2vr_player.js"></script>
+        <script src="skin.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+		<meta property="og:title" content="TACTIGRID">
+		<meta property="og:description" content="">
+		<meta name="mobile-web-app-capable" content="yes" />
+		<meta property="og:image" content="preview.jpg">
+		<style type="text/css" title="Default">
+			/* fullscreen */
+			html {
+				height:100%;
+			}
+			body {
+				height:100%;
+				margin: 0px;
+				background: black;
+				color: white;
+				overflow:hidden; /* disable scrollbars */
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* remove highlight on tab for iOS/Android */
+			}
+			/* fix for scroll bars on webkit & >=Mac OS X Lion */
+			::-webkit-scrollbar {
+				background-color: rgba(0,0,0,0.5);
+				width: 0.75em;
+				height: 0.75em;
+			}
+			::-webkit-scrollbar-thumb {
+				background-color:  rgba(255,255,255,0.5);
+			}
+			html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    #container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    .control-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10002;
+      display: none;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      font-family: sans-serif;
+    }
+    .control-toggle {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10003;
+      padding: 10px 15px;
+      background: rgb(255, 255, 255);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      font-family: sans-serif;
+      cursor: pointer;
+	  color:black;
+    }
+    #fabricContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10000;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+    }
+		</style>
+	</head>
+	<body>
+		<script type="text/javascript" src="pano2vr_player.js?ts=30964629">
+		</script>
+		<script type="text/javascript" src="skin.js?ts=30964629">
+		</script>
+		<link rel="stylesheet" href="3rdparty/leaflet/leaflet.css"/>
+		<script src="https://www.youtube.com/iframe_api"></script>
+		<script src="https://player.vimeo.com/api/player.js"></script>
+		<script src="3rdparty/lottie/lottie.min.js"></script>
+		<script src="3rdparty/leaflet/leaflet.js"></script>
+		<div id="container" style="width:100%;height:100%;overflow:hidden;">
+		<br>Loading...<br><br>
+		</div>
+		<script type="text/javascript">
+		function parseParams(paramsString, params) {
+			paramsString = paramsString.substring(1);
+			var firstSeparatorPos = paramsString.indexOf(",");
+			if (firstSeparatorPos != -1) {
+				params.startNode = paramsString.slice(0, firstSeparatorPos);
+				var viewingParamsString = paramsString.slice(firstSeparatorPos + 1);
+				var viewingParams = viewingParamsString.split(",");
+				if (viewingParams.length >= 3) {
+					var startView = {};
+					startView["pan"] = viewingParams[0];
+					startView["tilt"] = viewingParams[1];
+					startView["fov"] = viewingParams[2];
+					if (viewingParams.length >= 4) {
+						startView["projection"] = viewingParams[3];
+					}
+					params.startView = startView;
+				}
+			} else {
+				params.startNode = paramsString;
+				params.startView = "";
+			}
+		}
+		var params = {};
+		parseParams(document.location.hash, params);
+		var startNode = params.startNode;
+		var startView = params.startView;
+		if (("onhashchange" in window) && (!(/MSIE (\d+\.\d+);/.test(navigator.userAgent)))) {
+			window.onhashchange = function () {
+				parseParams(window.location.hash, params);
+				pano.openNext('{' + params.startNode + '}', params.startView);
+			}
+		} else {
+			var lastHash = window.location.hash;
+			window.setInterval(function () {
+				if (window.location.hash != lastHash) {
+					lastHash = window.location.hash;
+					parseParams(window.location.hash, params);
+					pano.openNext('{' + params.startNode + '}', params.startView);
+				}
+			}, 100);
+		}
+			// create the panorama player with the container
+			pano=new pano2vrPlayer("container");
+			pano.startNode = startNode;
+			pano.startView = startView;
+			pano.setQueryParameter("ts=30964629")
+			// add the skin object
+			skin=new pano2vrSkin(pano);
+			// load the configuration
+			window.addEventListener("load", function() {
+				pano.readConfigUrlAsync("pano.xml?ts=30964629");
+			});
+			if (window.navigator.userAgent.match(/Safari/i)) {
+				// fix for white borders, rotation on iPhone
+				function iosHfix(e) {
+					window.scrollTo(0, 1);
+					var container=document.getElementById("container");
+					var oh=container.offsetHeight;
+					document.documentElement.style.setProperty('height', '100vh');
+					if (oh!=container.offsetHeight) {
+						container.style.setProperty('height',"100%");
+					} else {
+						container.style.setProperty('height',window.innerHeight+"px");
+					}
+					window.scrollTo(0, 0);
+					pano.setViewerSize(container.offsetWidth, container.offsetHeight);
+				};
+				setTimeout(iosHfix,0);
+				setTimeout(iosHfix,100);
+				window.addEventListener("resize", function() {
+					setTimeout(iosHfix,0);
+					// hide toolbar on iPad happens with a delay
+					setTimeout(iosHfix,500);
+					setTimeout(iosHfix,1000);
+					setTimeout(iosHfix,2000);
+				});
+			}
+		</script>
+		<noscript>
+			<p><b>Please enable Javascript!</b></p>
+		</noscript>
+		<div id="container"></div>
+
+<div class="control-toggle" id="toggleControls">🎨 Show Drawing Controls</div>
+
+<div class="control-panel" id="controlPanel">
+  <button id="undoBtn">🔙 Undo</button>
+  <button id="clearBtn">🧹 Clear</button>
+  <label for="colorPicker">🎨</label>
+  <input type="color" id="colorPicker" value="#ff0000">
+  <label for="brushSize">✏️</label>
+  <input type="range" id="brushSize" min="1" max="30" value="5">
+  <button id="addRect">🟥 Rectangle</button>
+  <button id="addCircle">🟠 Circle</button>
+  <button id="addTriangle">🔺 Triangle</button>
+  <button id="addStar">⭐ Star</button>
+  <button id="addHex">⬡ Hexagon</button>
+</div>
+
+<div id="fabricContainer">
+  <canvas id="fabricCanvas"></canvas>
+</div>
+
+<script>
+  const fabricCanvas = new fabric.Canvas("fabricCanvas", {
+    isDrawingMode: false,
+    selection: false
+  });
+
+  const toggleBtn = document.getElementById("toggleControls");
+  const controlPanel = document.getElementById("controlPanel");
+  const fabricContainer = document.getElementById("fabricContainer");
+
+  const clearBtn = document.getElementById("clearBtn");
+  const undoBtn = document.getElementById("undoBtn");
+  const colorPicker = document.getElementById("colorPicker");
+  const brushSize = document.getElementById("brushSize");
+
+  const shapeButtons = [
+    document.getElementById("addRect"),
+    document.getElementById("addCircle"),
+    document.getElementById("addTriangle"),
+    document.getElementById("addStar"),
+    document.getElementById("addHex")
+  ];
+
+  let selectedShapeType = null;
+  let drawingControlsVisible = false;
+  let savedObjects = [];
+
+  function resizeFabricCanvas() {
+    fabricCanvas.setWidth(window.innerWidth);
+    fabricCanvas.setHeight(window.innerHeight);
+    fabricCanvas.renderAll();
+  }
+
+  window.addEventListener("resize", resizeFabricCanvas);
+  window.addEventListener("load", resizeFabricCanvas);
+  resizeFabricCanvas();
+
+  toggleBtn.addEventListener("click", () => {
+    drawingControlsVisible = !drawingControlsVisible;
+    controlPanel.style.display = drawingControlsVisible ? "flex" : "none";
+    fabricContainer.style.pointerEvents = drawingControlsVisible ? "auto" : "none";
+
+    toggleBtn.textContent = drawingControlsVisible
+      ? "🎨 Hide Drawing Controls"
+      : "🎨 Show Drawing Controls";
+
+    if (drawingControlsVisible) {
+      fabricCanvas.isDrawingMode = true;
+      fabricCanvas.loadFromJSON(savedObjects, () => fabricCanvas.renderAll());
+    } else {
+      savedObjects = JSON.stringify(fabricCanvas.toJSON(["labelType"]));
+      fabricCanvas.clear();
+    }
+  });
+
+  undoBtn.addEventListener("click", () => {
+    const lastObj = fabricCanvas._objects.pop();
+    if (lastObj) {
+      fabricCanvas.remove(lastObj);
+      fabricCanvas.renderAll();
+    }
+  });
+
+  clearBtn.addEventListener("click", () => {
+    fabricCanvas.clear();
+    savedObjects = "[]";
+  });
+
+  colorPicker.addEventListener("input", () => {
+    fabricCanvas.freeDrawingBrush.color = colorPicker.value;
+  });
+
+  brushSize.addEventListener("input", () => {
+    fabricCanvas.freeDrawingBrush.width = parseInt(brushSize.value, 10);
+  });
+
+  const shapeLabels = {
+    rect: "Cordon Party",
+    circle: "Search Party",
+    triangle: "Reserve Party",
+    star: "Interrogation Team",
+    hex: "CAT"
+  };
+
+  function createStar(size, color, left, top) {
+    const points = [];
+    const spikes = 5;
+    const outerRadius = size / 2;
+    const innerRadius = size / 4;
+    for (let i = 0; i < spikes * 2; i++) {
+      const angle = (i * Math.PI) / spikes;
+      const radius = i % 2 === 0 ? outerRadius : innerRadius;
+      points.push({ x: Math.cos(angle) * radius, y: Math.sin(angle) * radius });
+    }
+    return new fabric.Polygon(points, { fill: color, left, top });
+  }
+
+  function createPolygon(sides, radius, color, left, top) {
+    const points = [];
+    for (let i = 0; i < sides; i++) {
+      const angle = (i * 2 * Math.PI) / sides;
+      points.push({ x: radius * Math.cos(angle), y: radius * Math.sin(angle) });
+    }
+    return new fabric.Polygon(points, { fill: color, left, top });
+  }
+
+  function attachHoverLabel(shape, labelType) {
+    shape.labelType = labelType;
+    shape.hoverCursor = "pointer";
+    shape.hasBorders = true;
+    shape.hasControls = true;
+
+    shape.on("mouseover", function () {
+      if (fabricCanvas.tooltip) {
+        fabricCanvas.remove(fabricCanvas.tooltip);
+      }
+      fabricCanvas.tooltip = new fabric.Text(shapeLabels[labelType], {
+        left: shape.left + (shape.width || 30) + 10,
+        top: shape.top,
+        fontSize: 16,
+        fill: "black",
+        backgroundColor: "rgba(255,255,255,0.8)",
+        padding: 5,
+        selectable: false,
+        evented: false
+      });
+      fabricCanvas.add(fabricCanvas.tooltip);
+      fabricCanvas.renderAll();
+    });
+
+    shape.on("mouseout", function () {
+      if (fabricCanvas.tooltip) {
+        fabricCanvas.remove(fabricCanvas.tooltip);
+        fabricCanvas.tooltip = null;
+        fabricCanvas.renderAll();
+      }
+    });
+  }
+
+  function createShapeAt(type, left, top) {
+    const size = parseInt(brushSize.value, 10) * 5;
+    const color = colorPicker.value;
+    let shape;
+
+    switch (type) {
+      case 'rect':
+        shape = new fabric.Rect({ width: size, height: size, fill: color, left, top });
+        break;
+      case 'circle':
+        shape = new fabric.Circle({ radius: size / 2, fill: color, left, top });
+        break;
+      case 'triangle':
+        shape = new fabric.Triangle({ width: size, height: size, fill: color, left, top });
+        break;
+      case 'star':
+        shape = createStar(size, color, left, top);
+        break;
+      case 'hex':
+        shape = createPolygon(6, size / 2, color, left, top);
+        break;
+    }
+
+    attachHoverLabel(shape, type);
+    fabricCanvas.add(shape);
+  }
+
+  document.getElementById("addRect").addEventListener("click", () => {
+    selectedShapeType = "rect";
+    fabricCanvas.isDrawingMode = false;
+  });
+
+  document.getElementById("addCircle").addEventListener("click", () => {
+    selectedShapeType = "circle";
+    fabricCanvas.isDrawingMode = false;
+  });
+
+  document.getElementById("addTriangle").addEventListener("click", () => {
+    selectedShapeType = "triangle";
+    fabricCanvas.isDrawingMode = false;
+  });
+
+  document.getElementById("addStar").addEventListener("click", () => {
+    selectedShapeType = "star";
+    fabricCanvas.isDrawingMode = false;
+  });
+
+  document.getElementById("addHex").addEventListener("click", () => {
+    selectedShapeType = "hex";
+    fabricCanvas.isDrawingMode = false;
+  });
+
+  fabricCanvas.on("mouse:down", function (options) {
+    if (!drawingControlsVisible) return;
+    if (selectedShapeType && options.pointer && !options.target) {
+      createShapeAt(selectedShapeType, options.pointer.x, options.pointer.y);
+    }
+  });
+
+  // Restore labels after loading saved objects
+  fabricCanvas.on("after:render", () => {
+    fabricCanvas.getObjects().forEach(obj => {
+      if (obj.labelType && !obj._hasLabelEvents) {
+        attachHoverLabel(obj, obj.labelType);
+        obj._hasLabelEvents = true;
+      }
+    });
+  });
+
+  // Panorama change handling (modified event listener)
+  pano.addEventListener("panorama_ready", function () {
+    console.log("Panorama is ready - clearing canvas...");
+    fabricCanvas.clear();
+    savedObjects = "[]"; // Optionally clear saved objects
+  });
+
+  // You can also try listening to 'viewchange' or 'loaded' events, depending on Pano2VR version
+  pano.addEventListener("viewchange", function () {
+    console.log("View changed - clearing canvas...");
+    fabricCanvas.clear();
+    savedObjects = "[]"; // Optionally clear saved objects
+  });
+
+  // You can also try a fallback listener for any other Pano2VR event to see if panorama is triggered
+  pano.addEventListener("loaded", function () {
+    console.log("Pano2VR loaded - clearing canvas...");
+    fabricCanvas.clear();
+    savedObjects = "[]"; // Optionally clear saved objects
+  });
+</script>
+	<script src="/tactigrid-scene.js"></script>
+</body>
+</html>

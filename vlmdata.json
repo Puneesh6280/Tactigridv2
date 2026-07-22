@@ -1,0 +1,90 @@
+{
+  "CTW/Main Gate": {
+    "node56": {
+      "overall": "Main entrance of the Cadets Training Wing: a controlled gate under CCTV surveillance forming the sole vehicle/pedestrian chokepoint. A sentry post and guard structure flank the gate; a two-storey administrative building overlooks the entry. The interior opens onto a straight palm-lined avenue leading to the campus core.",
+      "directions": {
+        "front": {
+          "summary": "The main gate arch ('POWER THROUGH KNOWLEDGE') with an ornate swing metal gate to the right and a concrete guard structure to the left. A two-storey building stands just inside.",
+          "features": [
+            { "label": "Main gate arch & metal gate", "note": "Ornate iron swing gate on the right; the single controlled entry/exit point" },
+            { "label": "Guard structure (left of gate)", "note": "Low concrete box abutting the boundary wall; likely barrier/guard position" },
+            { "label": "Two-storey building", "note": "Yellow building beyond the gate with multiple windows on both floors and a red roof; ground and first-floor windows overlook the entry" },
+            { "label": "Boundary wall", "note": "Cream/red painted perimeter wall running left" },
+            { "label": "Parked scooter", "note": "Two-wheeler parked against the left wall" }
+          ],
+          "cover": "Gate pillars, the concrete guard box, and the boundary wall provide hard cover near the entrance",
+          "concealment": "Trees and the wall corner cast shadow; shrubbery to the left offers light concealment",
+          "blindSpots": "Area immediately behind the guard box and beyond the far side of the gate is not visible from this viewpoint",
+          "routes": "The gate is the primary approach; road curves in past the pillars toward the interior",
+          "hazards": "Gravel/rock landscaping bed at bottom-left (uneven footing); red-white kerb stones edging the road"
+        },
+        "right": {
+          "summary": "The 'Cadets Training Wing' rules board and a campus site-map board beside the internal road. Boundary wall runs along the left; a small single-storey hut sits at the far right.",
+          "features": [
+            { "label": "CCTV / rules signboard", "note": "States 'You are under CCTV surveillance', 'prove your identity', 'enter details in the book kept with guard' - indicates active surveillance and a manned entry log" },
+            { "label": "Site-map board", "note": "Painted layout of the Cadets Training Wing - a useful orientation reference" },
+            { "label": "Small hut (far right)", "note": "Single-storey outbuilding at the tree line on the right" },
+            { "label": "Boundary wall", "note": "Cream/red perimeter wall along the left of the internal road" }
+          ],
+          "cover": "The signboards and the boundary wall offer hard cover; the hut provides cover on the right",
+          "concealment": "Trees and potted-plant clusters give partial concealment along the road edge",
+          "blindSpots": "Behind the site-map board and beyond the hut on the right is not observable here",
+          "routes": "Internal road leads straight ahead into the campus from the gate",
+          "hazards": "Rock-filled kerb beds and brick-edged planters intrude on the road margins"
+        },
+        "back": {
+          "summary": "The internal approach avenue leading away from the gate into the campus - a straight tarmac road lined with palms, with a building on the left and an Indian flag on a pole in the distance.",
+          "features": [
+            { "label": "Internal avenue", "note": "Straight sealed road; the main axis into the campus - a natural movement corridor and long sightline" },
+            { "label": "Single-storey building (left)", "note": "White structure set behind hedging; wall and roofline visible" },
+            { "label": "Flagpole", "note": "National flag on a pole further down the avenue - an orientation landmark" },
+            { "label": "Landscaped verges", "note": "Low white walls, hedges and shaped shrubs line both sides" }
+          ],
+          "cover": "Low white boundary walls and the building corner on the left provide hard cover",
+          "concealment": "Palm trunks and roadside hedging give intermittent concealment along the avenue",
+          "blindSpots": "Dead ground behind the hedging and the left-hand building is hidden",
+          "routes": "The avenue is the principal internal route from the gate toward the campus core",
+          "hazards": "Direct sun down the avenue (glare on this bearing); paved/gravel verge transitions"
+        },
+        "left": {
+          "summary": "A sentry post - a small painted guard cabin with a window and doorway - set among palms and a large concrete barrier block beside the road.",
+          "features": [
+            { "label": "Sentry post cabin", "note": "Small red-and-cream guard hut with a covered front, a window and a door facing the road - a manned observation/checkpoint position" },
+            { "label": "Concrete barrier block", "note": "Large white cast block by the roadside; a vehicle barrier / hard cover" },
+            { "label": "Palm & shade trees", "note": "Tall palms and a broad-canopy tree providing overhead shade and concealment" },
+            { "label": "Lawn & buildings beyond", "note": "Open manicured lawn with single-storey buildings along the far edge" }
+          ],
+          "cover": "The concrete barrier block and the sentry cabin walls are solid hard cover",
+          "concealment": "Dense tree canopy and shadow give good concealment on this flank",
+          "blindSpots": "The interior of the sentry cabin and ground behind the barrier block are not visible",
+          "routes": "Road curves past the sentry post; the open lawn is crossable but exposed",
+          "hazards": "Rock-filled kerb beds around the tree bases; the barrier block narrows the road margin"
+        },
+        "up": {
+          "summary": "Clear open sky with tree canopy intruding at the edges; no structures or overhead features of note.",
+          "features": [
+            { "label": "Tree canopy", "note": "Palm and broadleaf crowns frame the upper edges" }
+          ],
+          "cover": "none obvious",
+          "concealment": "Overhead canopy offers concealment from aerial observation at the edges",
+          "blindSpots": "none obvious",
+          "routes": "none obvious",
+          "hazards": "none obvious"
+        },
+        "down": {
+          "summary": "Sealed tarmac road surface at the junction in front of the gate, with painted lane markings and the photographer's shadow; kerb and gravel beds at the margins.",
+          "features": [
+            { "label": "Road junction", "note": "Tarmac surface where the approach meets the gate; painted white lane lines" },
+            { "label": "Kerb & gravel beds", "note": "Red-white kerb stones and decorative rock beds at the road edges" }
+          ],
+          "cover": "none obvious",
+          "concealment": "none obvious",
+          "blindSpots": "none obvious",
+          "routes": "Road surface is open and trafficable in all directions at this junction",
+          "hazards": "Loose gravel beds at the margins; kerb stones are a trip/vehicle hazard"
+        }
+      },
+      "model": "seeded-from-imagery (regenerate via API once ANTHROPIC_API_KEY is set)"
+    }
+  }
+}
