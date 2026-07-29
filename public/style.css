@@ -613,9 +613,9 @@ a {
 }
 
 .distance-card {
-    width: 92%;
-    max-width: 620px;
-    max-height: 88vh;
+    width: 94%;
+    max-width: 1120px;
+    max-height: 92vh;
     overflow-y: auto;
     background: var(--panel);
     padding: 22px;
@@ -624,6 +624,41 @@ a {
     border: 1px solid var(--border-strong);
     color: var(--text);
     position: relative;
+}
+
+/* Two-column body: controls left, map + tools right. */
+.dc-cols {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Controls scroll on the left; the map is the wider, primary panel. */
+.dc-left {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* The map pins to the top of the scrolling card, so it stays in view while
+   you scroll through the controls on the left. */
+.dc-right {
+    flex: 0 0 58%;
+    min-width: 0;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+}
+
+.dc-right .osm-map {
+    height: 540px;
+}
+
+/* Below this width the two columns stack back into one. */
+@media (max-width: 900px) {
+    .dc-cols { flex-direction: column; }
+    .dc-left, .dc-right { flex: 1 1 auto; width: 100%; }
+    .dc-right { position: static; }
+    .dc-right .osm-map { height: 340px; }
 }
 
 .distance-card h3 {
@@ -920,85 +955,6 @@ a {
     font-family: var(--font-mono);
     font-size: 0.72em;
     color: var(--mint);
-}
-
-/* ---------- Scene detection (YOLO) ---------- */
-
-.scene-panel {
-    margin-top: 12px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--panel);
-    overflow: hidden;
-}
-
-.scene-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    background: var(--panel-alt);
-}
-
-.scene-head span {
-    font-family: var(--font-mono);
-    font-size: 0.72em;
-    letter-spacing: 0.1em;
-    color: var(--mint);
-}
-
-.scene-body {
-    padding: 12px;
-    font-size: 0.85em;
-    color: var(--text-dim);
-}
-
-.scene-dir {
-    margin-bottom: 10px;
-}
-
-.scene-dir:last-child { margin-bottom: 0; }
-
-.scene-dir .dir-label {
-    font-family: var(--font-mono);
-    font-size: 0.7em;
-    letter-spacing: 0.08em;
-    color: var(--text);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-}
-
-.scene-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.scene-chip {
-    font-family: var(--font-mono);
-    font-size: 0.72em;
-    padding: 3px 8px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    color: var(--text);
-    background: var(--panel-alt);
-}
-
-.scene-chip .conf { color: var(--text-dim); }
-
-.scene-empty {
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-    font-size: 0.78em;
-}
-
-.scene-note {
-    margin-top: 10px;
-    font-size: 0.72em;
-    color: var(--text-dim);
-    font-style: italic;
 }
 
 /* ---------- Toasts & in-page confirm ---------- */

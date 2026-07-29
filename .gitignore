@@ -8,6 +8,10 @@ tilecache/
 # Change them with: node setPassword.js admin <new-password>
 users.json
 
+# API keys — never commit
+apikeys.json
+.env
+
 # OS / editor junk
 Thumbs.db
 .DS_Store

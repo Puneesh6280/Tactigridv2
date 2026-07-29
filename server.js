@@ -45,6 +45,13 @@ protectedPages.forEach((page) => {
     app.get(page, auth.requireAuth, (req, res) => res.sendFile(path.join(__dirname, "public", page)));
 });
 
+// The tour viewer loads this panel script by a fixed URL; serve it with
+// no-cache so panel updates aren't stuck behind the browser cache.
+app.get("/tactigrid-scene.js", (req, res) => {
+    res.set("Cache-Control", "no-cache");
+    res.sendFile(path.join(__dirname, "public", "tactigrid-scene.js"));
+});
+
 app.use(express.static("public"));
 
 // uploads/ is public so tours can load their own tiles/scripts, but it must

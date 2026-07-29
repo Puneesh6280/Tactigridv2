@@ -46,6 +46,25 @@
         "lon": 75.7503087
       }
     },
-    "pins": []
+    "pins": [
+      {
+        "id": "d69fdcf0f328c735",
+        "lat": 22.537088,
+        "lon": 75.748852,
+        "title": "Squash Courts",
+        "description": "",
+        "kind": "asset",
+        "createdAt": "2026-07-29T04:22:12.371Z"
+      },
+      {
+        "id": "24741dadf48c0093",
+        "lat": 22.536932,
+        "lon": 75.749067,
+        "title": "National Flag",
+        "description": "Ht:154 ft",
+        "kind": "asset",
+        "createdAt": "2026-07-29T04:22:57.553Z"
+      }
+    ]
   }
 }

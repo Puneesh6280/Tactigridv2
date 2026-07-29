@@ -591,18 +591,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 <div class="distance-result" id="distanceResult">Pick a structure to begin.</div>
 
-                <div class="scene-panel" id="scenePanel" style="display:none">
-                    <div class="scene-head">
-                        <span id="sceneTitle">SCENE AROUND THIS POINT</span>
-                        <button type="button" class="btn" id="sceneAnalyzeBtn">ANALYZE</button>
-                    </div>
-                    <div class="scene-body" id="sceneBody">Pick a starting location, then analyze what the AI sees around it.</div>
-                </div>
-
                 <button class="btn btn-primary" id="openTourBtn" style="display: none; width: 100%; margin-top: 12px;">OPEN TOUR &rarr;</button>
             </div>
         `;
         document.body.appendChild(overlay);
+
+        // Two-column layout for a roomier modal: the picker/scene/open-tour
+        // controls on the left, the large map + route + placement tools on the
+        // right. Done by moving the already-built elements so the template
+        // stays flat and simple. Stacks back to one column on narrow screens.
+        (function twoColumnLayout() {
+            const card = overlay.querySelector(".distance-card");
+            const cols = document.createElement("div");
+            cols.className = "dc-cols";
+            const left = document.createElement("div");
+            left.className = "dc-left";
+            const right = document.createElement("div");
+            right.className = "dc-right";
+            cols.appendChild(left);
+            cols.appendChild(right);
+            card.appendChild(cols);
+            const g = (id) => document.getElementById(id);
+            // All the compact controls go left; the map alone goes right and is
+            // made sticky (in CSS) so it stays visible while the controls scroll.
+            ["distanceSelect", "distanceResult", "openTourBtn", "routePanel", "placePanel"].forEach((id) => {
+                const el = g(id);
+                if (el) left.appendChild(el);
+            });
+            ["mapBanner", "osmMap"].forEach((id) => {
+                const el = g(id);
+                if (el) right.appendChild(el);
+            });
+        })();
 
         const structureSelect = document.getElementById("structureSelect");
         const distanceSelect = document.getElementById("distanceSelect");
@@ -610,10 +630,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const distanceTitle = document.getElementById("distanceTitle");
         const distanceClose = document.getElementById("distanceClose");
         const openTourBtn = document.getElementById("openTourBtn");
-        const scenePanel = document.getElementById("scenePanel");
-        const sceneTitle = document.getElementById("sceneTitle");
-        const sceneBody = document.getElementById("sceneBody");
-        const sceneAnalyzeBtn = document.getElementById("sceneAnalyzeBtn");
         const renameStructureBtn = document.getElementById("renameStructureBtn");
         const renameForm = document.getElementById("renameForm");
         const renameLocation = document.getElementById("renameLocation");
@@ -1269,113 +1285,11 @@ document.addEventListener("DOMContentLoaded", function () {
             updateOpenTourLabel();
             renderGeoOnMap();
             distanceResult.textContent = `Tour will open at ${loc.displayName}. Use the route planner below for distances.`;
-            loadScene(loc.nodeId, loc.displayName);
         };
 
-        // ---------- Scene detection (YOLO) ----------
-        const DIRECTION_ORDER = ["front", "right", "back", "left", "up", "down"];
-        let sceneNodeId = null;
+        // Tactical scene analysis now lives only in the 3D pano viewer's live
+        // panel (public/tactigrid-scene.js), so there is no scene panel here.
 
-        const renderScene = (scene, displayName) => {
-            if (!scene || !scene.faces) {
-                sceneBody.innerHTML = '<span class="scene-empty">Not analyzed yet.</span>';
-                return;
-            }
-            const withObjects = scene.faces
-                .filter((f) => f.detections.length)
-                .sort((a, b) => DIRECTION_ORDER.indexOf(a.direction) - DIRECTION_ORDER.indexOf(b.direction));
-
-            if (!withObjects.length) {
-                sceneBody.innerHTML = '<span class="scene-empty">No recognised objects around this point.</span>';
-                return;
-            }
-
-            let html = "";
-            for (const face of withObjects) {
-                // Collapse duplicate labels into "3× chair" with the best confidence.
-                const byLabel = new Map();
-                for (const d of face.detections) {
-                    const cur = byLabel.get(d.label) || { count: 0, conf: 0 };
-                    byLabel.set(d.label, { count: cur.count + 1, conf: Math.max(cur.conf, d.confidence) });
-                }
-                const chips = [...byLabel.entries()]
-                    .sort((a, b) => b[1].count - a[1].count)
-                    .map(([label, { count, conf }]) =>
-                        `<span class="scene-chip">${count > 1 ? `${count}× ` : ""}${label} <span class="conf">${Math.round(conf * 100)}%</span></span>`
-                    )
-                    .join("");
-                html += `<div class="scene-dir"><div class="dir-label">${face.direction}</div><div class="scene-chips">${chips}</div></div>`;
-            }
-            html += `<div class="scene-note">${scene.objectCount} objects · general-object model (doors/windows need a specialised model)</div>`;
-            sceneBody.innerHTML = html;
-        };
-
-        const loadScene = async (nodeId, displayName) => {
-            sceneNodeId = nodeId;
-            scenePanel.style.display = "block";
-            sceneTitle.textContent = `SCENE AT ${displayName.toUpperCase()}`;
-            sceneBody.innerHTML = '<span class="scene-empty">Loading…</span>';
-            sceneAnalyzeBtn.disabled = false;
-
-            try {
-                const r = await api(
-                    `/api/tours/${encodeURIComponent(currentProject)}/${encodeURIComponent(currentFolder)}/scene/${encodeURIComponent(nodeId)}`
-                );
-                const data = await r.json();
-                if (!data.success) {
-                    sceneBody.innerHTML = '<span class="scene-empty">Could not load scene.</span>';
-                    return;
-                }
-                if (!data.modelAvailable) {
-                    sceneAnalyzeBtn.style.display = "none";
-                    sceneBody.innerHTML = '<span class="scene-empty">Detection model not installed on the server.</span>';
-                    return;
-                }
-                sceneAnalyzeBtn.style.display = isAdminView ? "inline-block" : "none";
-                if (data.analyzed) {
-                    renderScene(data.scene, displayName);
-                } else {
-                    sceneBody.innerHTML = isAdminView
-                        ? '<span class="scene-empty">Not analyzed yet — click ANALYZE (~15 s).</span>'
-                        : '<span class="scene-empty">This point has not been analyzed yet.</span>';
-                }
-            } catch {
-                sceneBody.innerHTML = '<span class="scene-empty">Server error loading scene.</span>';
-            }
-        };
-
-        sceneAnalyzeBtn.addEventListener("click", async () => {
-            if (!sceneNodeId) return;
-            const nodeId = sceneNodeId;
-            const displayName = currentLocations[selectedIndex] ? currentLocations[selectedIndex].displayName : nodeId;
-            sceneAnalyzeBtn.disabled = true;
-            sceneAnalyzeBtn.textContent = "ANALYZING…";
-            sceneBody.innerHTML = '<span class="scene-empty">Detecting objects in all directions… (~15 s)</span>';
-            try {
-                const r = await api(
-                    `/api/tours/${encodeURIComponent(currentProject)}/${encodeURIComponent(currentFolder)}/scene/${encodeURIComponent(nodeId)}`,
-                    { method: "POST" }
-                );
-                const data = await r.json();
-                if (!data.success) {
-                    toast(data.message || "Detection failed.", "error", 7000);
-                    sceneBody.innerHTML = '<span class="scene-empty">Detection failed.</span>';
-                    return;
-                }
-                // Guard against the user having moved on while it ran.
-                if (sceneNodeId === nodeId) renderScene(data.scene, displayName);
-                toast(`Scene analyzed: ${data.scene.objectCount} objects found.`, "success");
-            } catch {
-                toast("Server error during detection.", "error");
-                sceneBody.innerHTML = '<span class="scene-empty">Server error.</span>';
-            } finally {
-                sceneAnalyzeBtn.disabled = false;
-                sceneAnalyzeBtn.textContent = "ANALYZE";
-            }
-        });
-
-        // Pins that sit on the same node are drawn once; clicking opens a small
-        // menu so every name underneath stays reachable.
         const loadStructureLocations = async (project, folder) => {
             currentProject = project;
             currentFolder = folder;
@@ -1433,7 +1347,6 @@ document.addEventListener("DOMContentLoaded", function () {
             distanceSelect.innerHTML = '<option value="">Choose a starting location...</option>';
             distanceSelect.style.display = "none";
             openTourBtn.style.display = "none";
-            scenePanel.style.display = "none";
             renameStructureBtn.style.display = "none";
             reuploadStructureBtn.style.display = "none";
             deleteStructureBtn.style.display = "none";
@@ -1603,8 +1516,6 @@ document.addEventListener("DOMContentLoaded", function () {
         distanceSelect.addEventListener("change", () => {
             if (distanceSelect.value === "") {
                 selectedIndex = null;
-                sceneNodeId = null;
-                scenePanel.style.display = "none";
                 updateOpenTourLabel();
                 renderGeoOnMap();
                 distanceResult.textContent = "Select a location to see the distance, or open the tour there directly.";

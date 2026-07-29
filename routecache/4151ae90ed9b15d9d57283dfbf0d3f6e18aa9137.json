@@ -1,0 +1,1 @@
+{"metres":142,"seconds":101,"shape":[[22.53813,75.750245],[22.538448,75.749901],[22.538768,75.750339],[22.538781,75.750357],[22.538972,75.750597]],"steps":[{"instruction":"Walk northwest.","metres":50,"seconds":35,"type":2},{"instruction":"Turn right.","metres":92,"seconds":65,"type":10},{"instruction":"You have arrived at your destination.","metres":0,"seconds":0,"type":4}]}

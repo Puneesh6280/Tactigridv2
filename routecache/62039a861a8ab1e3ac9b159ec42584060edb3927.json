@@ -1,0 +1,1 @@
+{"metres":142,"seconds":103,"shape":[[22.538972,75.750597],[22.538781,75.750357],[22.538768,75.750339],[22.538448,75.749901],[22.53813,75.750245]],"steps":[{"instruction":"Walk southwest.","metres":92,"seconds":68,"type":1},{"instruction":"Turn left.","metres":50,"seconds":35,"type":15},{"instruction":"Your destination is on the left.","metres":0,"seconds":0,"type":6}]}

@@ -32,8 +32,8 @@
   function buildPanel() {
     const style = document.createElement("style");
     style.textContent = `
-      #tg-scene{position:fixed;top:70px;left:14px;z-index:10050;width:320px;max-width:calc(100vw - 28px);
-        max-height:calc(100vh - 120px);display:flex;flex-direction:column;
+      #tg-scene{position:fixed;top:120px;left:14px;z-index:10050;width:320px;max-width:calc(100vw - 28px);
+        max-height:calc(100vh - 140px);display:flex;flex-direction:column;
         background:rgba(9,14,12,.92);border:1px solid rgba(46,230,161,.45);border-radius:8px;
         color:#eaf5ef;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;
         box-shadow:0 8px 30px rgba(0,0,0,.5);backdrop-filter:blur(6px);overflow:hidden}
@@ -92,6 +92,29 @@
       });
       dirTabsEl.appendChild(b);
     });
+
+    positionPanel();
+    window.addEventListener("resize", positionPanel);
+  }
+
+  // The Pano2VR skin's big TACTIGRID title (.shadow_title) scales with the
+  // window, so we sit the panel just below whatever its current bottom is,
+  // rather than a fixed offset that would overlap at some sizes.
+  function positionPanel() {
+    if (!panelEl) return;
+    let topPx = 120; // safe fallback
+    const titles = document.querySelectorAll(".shadow_title, .ggskin_text");
+    let maxBottom = 0;
+    titles.forEach((t) => {
+      const r = t.getBoundingClientRect();
+      // Only consider a title-like element anchored top-left, not full-page overlays.
+      if (r.top < 160 && r.left < 220 && r.height > 0 && r.height < 200) {
+        maxBottom = Math.max(maxBottom, r.bottom);
+      }
+    });
+    if (maxBottom > 0) topPx = Math.round(maxBottom) + 14;
+    panelEl.style.top = topPx + "px";
+    panelEl.style.maxHeight = `calc(100vh - ${topPx + 24}px)`;
   }
 
   async function fetchAnalysis(nodeId) {
