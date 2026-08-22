@@ -1,0 +1,38 @@
+Backend  : ollama (qwen2.5vl:7b)
+Structure: CTW/Main Gate
+Nodes    : 108 total, 108 with imagery, 79 already analysed
+To do    : 29
+[1/29] node77 ... ok (90s), ~42 min remaining
+[2/29] node121 ... ok (83s), ~39 min remaining
+[3/29] node122 ... ok (92s), ~38 min remaining
+[4/29] node119 ... ok (83s), ~36 min remaining
+[5/29] node124 ... ok (102s), ~36 min remaining
+[6/29] node125 ... ok (86s), ~34 min remaining
+[7/29] node102 ... ok (84s), ~32 min remaining
+[8/29] node156 ... ok (111s), ~32 min remaining
+[9/29] node127 ... ok (85s), ~30 min remaining
+[10/29] node129 ... ok (72s), ~28 min remaining
+[11/29] node111 ... FAILED: No view could be analysed. front: Model returned nothing for this view - usually another request was using the GPU at the same time. Run analysis one at a time.
+[12/29] node157 ... FAILED: No view could be analysed. front: Model returned nothing for this view - usually another request was using the GPU at the same time. Run analysis one at a time.
+      2 failures in a row - reloading the model...
+      reloaded; retrying node157
+[12/29] node157 ... ok (69s), ~23 min remaining
+[13/29] node159 ... ok (89s), ~22 min remaining
+[14/29] node160 ... ok (93s), ~21 min remaining
+[15/29] node99 ... ok (99s), ~20 min remaining
+[16/29] node116 ... ok (76s), ~18 min remaining
+[17/29] node117 ... ok (76s), ~17 min remaining
+[18/29] node113 ... ok (70s), ~15 min remaining
+[19/29] node115 ... ok (63s), ~14 min remaining
+[20/29] node104 ... ok (76s), ~12 min remaining
+[21/29] node94 ... ok (72s), ~11 min remaining
+[22/29] node161 ... ok (56s), ~9 min remaining
+[23/29] node162 ... ok (89s), ~8 min remaining
+[24/29] node107 ... ok (87s), ~7 min remaining
+[25/29] node108 ... ok (66s), ~5 min remaining
+[26/29] node163 ... ok (66s), ~4 min remaining
+[27/29] node100 ... ok (104s), ~3 min remaining
+[28/29] node105 ... ok (92s), ~1 min remaining
+[29/29] node118 ... ok (67s), ~0 min remaining
+
+Done: 28 analysed, 1 failed, 1 model reload(s), 39 min total.

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TAC-GRID — Reaction Analysis</title>
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css" />
+  <style>
+    /* Self-contained on purpose: this page must not depend on the main
+       dashboard stylesheet, so changes here can never affect it. No web
+       fonts either - the whole page has to render with no connection. */
+    :root {
+      --bg: #0b0f14;
+      --panel: #131a22;
+      --panel2: #1a232e;
+      --line: #263340;
+      --text: #dfe7ef;
+      --dim: #8a9bad;
+      --accent: #4ade80;
+      --immediate: #22c55e;
+      --under1: #84cc16;
+      --under2: #f59e0b;
+      --beyond: #ef4444;
+      --mono: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+      --sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: var(--sans); font-size: 14px;
+    }
+    header {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding: 12px 18px; background: var(--panel); border-bottom: 1px solid var(--line);
+    }
+    .brand { font-family: var(--mono); letter-spacing: .18em; font-size: 15px; }
+    .brand span { color: var(--accent); }
+    .sub { color: var(--dim); font-size: 12px; font-family: var(--mono); }
+    .spacer { flex: 1; }
+    a.back { color: var(--dim); text-decoration: none; font-size: 12px; font-family: var(--mono); }
+    a.back:hover { color: var(--text); }
+
+    .wrap { display: grid; grid-template-columns: 420px 1fr; gap: 0; height: calc(100vh - 53px); }
+    @media (max-width: 900px) { .wrap { grid-template-columns: 1fr; height: auto; } #map { height: 60vh; } }
+
+    .side { overflow-y: auto; border-right: 1px solid var(--line); background: var(--panel); }
+    .block { padding: 16px 18px; border-bottom: 1px solid var(--line); }
+    .block h2 {
+      margin: 0 0 10px; font-size: 11px; letter-spacing: .18em; color: var(--dim);
+      font-family: var(--mono); font-weight: 600;
+    }
+    label { display: block; font-size: 11px; color: var(--dim); margin: 10px 0 4px; font-family: var(--mono); letter-spacing: .1em; }
+    select, button {
+      width: 100%; padding: 9px 10px; background: var(--panel2); color: var(--text);
+      border: 1px solid var(--line); border-radius: 4px; font-family: var(--sans); font-size: 13px;
+    }
+    button { cursor: pointer; font-family: var(--mono); letter-spacing: .12em; font-size: 12px; }
+    button.primary { background: #14532d; border-color: #166534; color: #dcfce7; }
+    button.primary:hover { background: #166534; }
+    button:disabled { opacity: .5; cursor: default; }
+
+    .pace { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .pace button.on { background: #14532d; border-color: #166534; color: #dcfce7; }
+
+    .bands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px; }
+    .band { padding: 8px 6px; border-radius: 4px; text-align: center; background: var(--panel2); border: 1px solid var(--line); }
+    .band b { display: block; font-size: 18px; font-family: var(--mono); }
+    .band span { font-size: 9px; color: var(--dim); letter-spacing: .06em; }
+    .band.i b { color: var(--immediate); } .band.a b { color: var(--under1); }
+    .band.b b { color: var(--under2); }   .band.c b { color: var(--beyond); }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; font-size: 10px; color: var(--dim); font-family: var(--mono); letter-spacing: .1em; padding: 6px 4px; border-bottom: 1px solid var(--line); }
+    td { padding: 7px 4px; border-bottom: 1px solid #1b242f; }
+    td.n { font-family: var(--mono); text-align: right; white-space: nowrap; }
+    tr.row { cursor: pointer; }
+    tr.row:hover td { background: var(--panel2); }
+    .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+    .immediate { background: var(--immediate); } .under1min { background: var(--under1); }
+    .under2min { background: var(--under2); }    .beyond { background: var(--beyond); }
+
+    #map { width: 100%; height: 100%; background: #0e141b; }
+    .leaflet-container { background: #0e141b; }
+    .note { color: var(--dim); font-size: 11.5px; line-height: 1.55; margin: 10px 0 0; }
+    .stat { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12.5px; }
+    .stat span:last-child { font-family: var(--mono); }
+    .err { color: #fca5a5; font-size: 12px; margin-top: 8px; }
+    .pill { display: inline-block; padding: 1px 7px; border-radius: 999px; font-size: 10px; font-family: var(--mono); background: var(--panel2); border: 1px solid var(--line); color: var(--dim); }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="brand">TACTI<span>GRID</span></div>
+      <div class="sub">REACTION &amp; COVERAGE ANALYSIS</div>
+    </div>
+    <div class="spacer"></div>
+    <span class="pill" id="offlinePill">CHECKING…</span>
+    <a class="back" href="admin_dashboard.html">&larr; COMMAND DECK</a>
+  </header>
+
+  <div class="wrap">
+    <div class="side">
+      <div class="block">
+        <h2>INCIDENT / ORIGIN</h2>
+        <label>POSITION</label>
+        <select id="origin"></select>
+        <label>PACE</label>
+        <div class="pace">
+          <button data-pace="walk" class="on">WALK</button>
+          <button data-pace="brisk">BRISK</button>
+          <button data-pace="double">DOUBLE</button>
+        </div>
+        <label style="margin-top:14px">&nbsp;</label>
+        <button class="primary" id="run">RUN REACTION ANALYSIS</button>
+        <div class="err" id="err"></div>
+        <div class="bands">
+          <div class="band i"><b id="b1">–</b><span>&le;30 SEC</span></div>
+          <div class="band a"><b id="b2">–</b><span>&le;1 MIN</span></div>
+          <div class="band b"><b id="b3">–</b><span>&le;2 MIN</span></div>
+          <div class="band c"><b id="b4">–</b><span>&gt;2 MIN</span></div>
+        </div>
+        <p class="note" id="paceNote"></p>
+      </div>
+
+      <div class="block">
+        <h2>REACTION TIMES</h2>
+        <table>
+          <thead><tr><th>POSITION</th><th style="text-align:right">DIST</th><th style="text-align:right">TIME</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="3" class="note">Choose a position and run the analysis.</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="block">
+        <h2>SITE STATUS</h2>
+        <div id="overview"><p class="note">Loading…</p></div>
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var PROJECT = "CTW", FOLDER = "Main Gate";
+    var pace = "walk", map, layer, lastData = null;
+
+    var PACE_NOTE = {
+      walk:   "Normal walking pace, 1.35 m/s. Planning figure on made paths.",
+      brisk:  "Purposeful or loaded movement, 2.0 m/s.",
+      double: "Double time, 3.3 m/s. Not sustainable over distance."
+    };
+
+    function el(id) { return document.getElementById(id); }
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    function base() { return "/api/tours/" + encodeURIComponent(PROJECT) + "/" + encodeURIComponent(FOLDER); }
+
+    function api(path) {
+      return fetch(path, { headers: { Accept: "application/json" } }).then(function (r) {
+        if (r.status === 401) { window.location.href = "index.html"; throw new Error("Not signed in."); }
+        return r.json().then(function (j) {
+          if (!r.ok || j.success === false) throw new Error(j.message || ("Request failed (" + r.status + ")"));
+          return j;
+        });
+      });
+    }
+
+    function fmtTime(s) {
+      if (s < 60) return s + " s";
+      var m = Math.floor(s / 60), r = s % 60;
+      return m + "m " + (r < 10 ? "0" : "") + r + "s";
+    }
+
+    // ---- map -------------------------------------------------------------
+    function initMap() {
+      map = L.map("map", { zoomControl: true, attributionControl: false }).setView([22.5370, 75.7514], 17);
+      // Tiles come through the server's disk cache, so the map still draws
+      // with no connection once an area has been cached.
+      L.tileLayer("/api/tiles/{z}/{x}/{y}.png", { maxZoom: 19, minZoom: 13 }).addTo(map);
+      layer = L.layerGroup().addTo(map);
+    }
+
+    function colourFor(band) {
+      return { immediate: "#22c55e", under1min: "#84cc16", under2min: "#f59e0b", beyond: "#ef4444" }[band] || "#8a9bad";
+    }
+
+    function draw(data) {
+      layer.clearLayers();
+      var pts = [];
+
+      if (data.origin && data.origin.lat != null) {
+        pts.push([data.origin.lat, data.origin.lon]);
+        L.circleMarker([data.origin.lat, data.origin.lon], {
+          radius: 11, color: "#ffffff", weight: 3, fillColor: "#0ea5e9", fillOpacity: 1
+        }).addTo(layer).bindTooltip("ORIGIN — " + data.origin.name, { permanent: false });
+      }
+
+      data.reached.forEach(function (r) {
+        if (r.lat == null) return;
+        pts.push([r.lat, r.lon]);
+        if (r.shape && r.shape.length > 1) {
+          L.polyline(r.shape, { color: colourFor(r.band), weight: 3, opacity: 0.55 }).addTo(layer);
+        }
+        L.circleMarker([r.lat, r.lon], {
+          radius: 8, color: "#0b0f14", weight: 2, fillColor: colourFor(r.band), fillOpacity: 1
+        }).addTo(layer).bindTooltip(r.name + " — " + fmtTime(r.seconds) + " (" + r.metres + " m)");
+      });
+
+      if (pts.length > 1) map.fitBounds(L.latLngBounds(pts).pad(0.25));
+      else if (pts.length === 1) map.setView(pts[0], 18);
+    }
+
+    function renderRows(data) {
+      var tb = el("rows");
+      if (!data.reached.length) {
+        tb.innerHTML = '<tr><td colspan="3" class="note">Nothing else is placed on the map yet.</td></tr>';
+        return;
+      }
+      tb.innerHTML = data.reached.map(function (r) {
+        return '<tr class="row" data-lat="' + r.lat + '" data-lon="' + r.lon + '">' +
+          '<td><span class="dot ' + r.band + '"></span>' + esc(r.name) + "</td>" +
+          '<td class="n">' + r.metres + " m</td>" +
+          '<td class="n">' + fmtTime(r.seconds) + "</td></tr>";
+      }).join("");
+      Array.prototype.forEach.call(tb.querySelectorAll("tr.row"), function (tr) {
+        tr.addEventListener("click", function () {
+          map.setView([Number(tr.dataset.lat), Number(tr.dataset.lon)], 19);
+        });
+      });
+    }
+
+    function run() {
+      var from = el("origin").value;
+      if (!from) return;
+      el("err").textContent = "";
+      el("run").disabled = true;
+      el("run").textContent = "ANALYSING…";
+      api(base() + "/reaction?from=" + encodeURIComponent(from) + "&pace=" + pace)
+        .then(function (d) {
+          lastData = d;
+          el("b1").textContent = d.bands.immediate;
+          el("b2").textContent = d.bands.under1min;
+          el("b3").textContent = d.bands.under2min;
+          el("b4").textContent = d.bands.beyond;
+          renderRows(d);
+          draw(d);
+          var allCached = d.reached.every(function (r) { return r.cached; });
+          el("offlinePill").textContent = allCached ? "OFFLINE READY" : "USED NETWORK";
+          el("offlinePill").style.color = allCached ? "#4ade80" : "#f59e0b";
+        })
+        .catch(function (e) { el("err").textContent = e.message; })
+        .finally(function () {
+          el("run").disabled = false;
+          el("run").textContent = "RUN REACTION ANALYSIS";
+        });
+    }
+
+    function loadOverview() {
+      api(base() + "/overview").then(function (o) {
+        var t = o.totals;
+        var withBlind = o.nodes.filter(function (n) { return n.blindSpotMentions > 0; }).length;
+        var withHaz = o.nodes.filter(function (n) { return n.hazardMentions > 0; }).length;
+        el("overview").innerHTML =
+          stat("Panorama nodes", t.nodes) +
+          stat("Placed on map", t.placed + " / " + t.nodes) +
+          stat("Scene analysed", t.analysed + " / " + t.nodes) +
+          stat("Named locations", t.named) +
+          stat("Nodes reporting hidden ground", withBlind) +
+          stat("Nodes reporting hazards", withHaz) +
+          '<p class="note">Reaction times use real mapped paths between surveyed ' +
+          'positions. Distances are ground truth; times are a planning estimate ' +
+          'at the selected pace, not a promise about a specific person.</p>';
+      }).catch(function (e) {
+        el("overview").innerHTML = '<p class="err">' + esc(e.message) + "</p>";
+      });
+    }
+    function stat(k, v) { return '<div class="stat"><span>' + esc(k) + "</span><span>" + esc(v) + "</span></div>"; }
+
+    function loadOrigins() {
+      return api(base() + "/geo").then(function (geo) {
+        return api(base() + "/locations").then(function (loc) {
+          var placed = geo.nodes || {};
+          var names = {};
+          (loc.locations || []).forEach(function (l) { if (!names[l.nodeId]) names[l.nodeId] = l.displayName; });
+          var opts = Object.keys(placed).map(function (id) {
+            return { id: id, name: names[id] || id };
+          }).sort(function (a, b) { return a.name.localeCompare(b.name); });
+
+          el("origin").innerHTML = opts.map(function (o) {
+            return '<option value="' + esc(o.id) + '">' + esc(o.name) + "</option>";
+          }).join("");
+          // Main Gate is the natural default start point for this site.
+          if (placed.node56) el("origin").value = "node56";
+        });
+      });
+    }
+
+    // ---- wire up ---------------------------------------------------------
+    initMap();
+    el("paceNote").textContent = PACE_NOTE.walk;
+    Array.prototype.forEach.call(document.querySelectorAll(".pace button"), function (b) {
+      b.addEventListener("click", function () {
+        document.querySelectorAll(".pace button").forEach(function (x) { x.classList.remove("on"); });
+        b.classList.add("on");
+        pace = b.dataset.pace;
+        el("paceNote").textContent = PACE_NOTE[pace];
+        if (lastData) run();
+      });
+    });
+    el("run").addEventListener("click", run);
+    el("origin").addEventListener("change", run);
+
+    loadOrigins().then(run).catch(function (e) { el("err").textContent = e.message; });
+    loadOverview();
+  })();
+  </script>
+</body>
+</html>

@@ -97,7 +97,7 @@
     window.addEventListener("resize", positionPanel);
   }
 
-  // The Pano2VR skin's big TACTIGRID title (.shadow_title) scales with the
+  // The Pano2VR skin's big TAC-GRID title (.shadow_title) scales with the
   // window, so we sit the panel just below whatever its current bottom is,
   // rather than a fixed offset that would overlap at some sizes.
   function positionPanel() {

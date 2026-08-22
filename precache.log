@@ -1,0 +1,34 @@
+Structure : CTW/Main Gate
+Placed    : 11 node(s), 2 pin(s)
+Bounds    : N22.54171 S22.53302 E75.75425 W75.74635
+
+[1/2] Map tiles, zoom 14-19: 254 tile(s) to consider
+      25/254 (new 13, cached 12, failed 0)
+      50/254 (new 35, cached 15, failed 0)
+      75/254 (new 54, cached 21, failed 0)
+      100/254 (new 79, cached 21, failed 0)
+      125/254 (new 104, cached 21, failed 0)
+      151/254 (new 127, cached 24, failed 0)
+      180/254 (new 148, cached 32, failed 0)
+      205/254 (new 170, cached 35, failed 0)
+      230/254 (new 195, cached 35, failed 0)
+      254/254 (new 219, cached 35, failed 0)
+      Done: 219 downloaded, 35 already cached, 0 failed
+
+[2/2] Walking routes between placed nodes: 110 pair(s)
+      from node56: ok
+      from node12: ok
+      from node16: ok
+      from node18: ok
+      from node51: ok
+      from node92: ok
+      from node57: ok
+      from node110: ok
+      from node63: ok
+      from node65: ok
+      from node26: ok
+      Done: 0 newly cached, 110 already cached, 0 failed
+
+OFFLINE READY
+  tiles : 268 (1.1 MB)
+  routes: 110

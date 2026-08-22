@@ -5,7 +5,7 @@
 // cached in a sidecar keyed by project/folder/nodeId. The cache is dropped
 // for a tour when it is re-uploaded or deleted.
 //
-// The Python executable is taken from TACTIGRID_PYTHON, falling back to
+// The Python executable is taken from TACGRID_PYTHON, falling back to
 // "python" on PATH. numpy + opencv-python must be importable there; no
 // torch/ultralytics needed.
 
@@ -16,7 +16,7 @@ const { execFile } = require("child_process");
 const sceneFilePath = path.join(__dirname, "scenedata.json");
 const detectorPath = path.join(__dirname, "detector.py");
 const modelPath = path.join(__dirname, "models", "yolov8n.onnx");
-const PYTHON = process.env.TACTIGRID_PYTHON || "python";
+const PYTHON = process.env.TACGRID_PYTHON || "python";
 const uploadsRoot = path.join(__dirname, "uploads");
 
 function readAll() {
@@ -71,11 +71,17 @@ function runDetector(project, folder, nodeId) {
     execFile(
       PYTHON,
       [detectorPath, nodeDir, modelPath],
-      { timeout: 120000, maxBuffer: 8 * 1024 * 1024 },
+      {
+        timeout: 120000,
+        maxBuffer: 8 * 1024 * 1024,
+        // Same OpenBLAS per-thread allocation failure that broke stitching on
+        // the larger panoramas - see vlmAnalyze.js.
+        env: { ...process.env, OPENBLAS_NUM_THREADS: "1" }
+      },
       (err, stdout, stderr) => {
         if (err && !stdout) {
           const hint = /ENOENT/.test(err.message)
-            ? `Python not found. Set TACTIGRID_PYTHON to your python.exe path.`
+            ? `Python not found. Set TACGRID_PYTHON to your python.exe path.`
             : (stderr || err.message);
           return reject(new Error(hint));
         }

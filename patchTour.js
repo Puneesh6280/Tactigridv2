@@ -32,9 +32,9 @@ function stripSourceFiles(tourDir) {
 // Injects the tactical-scene panel script into the viewer. The tour HTML is
 // regenerated on every upload, so this must be re-applied each time rather
 // than edited in by hand.
-const SCENE_TAG = '<script src="/tactigrid-scene.js"></script>';
+const SCENE_TAG = '<script src="/tacgrid-scene.js"></script>';
 function injectSceneScript(html) {
-  if (html.includes("/tactigrid-scene.js")) return html;
+  if (html.includes("/tacgrid-scene.js")) return html;
   if (html.includes("</body>")) return html.replace("</body>", `${SCENE_TAG}\n</body>`);
   return html + `\n${SCENE_TAG}\n`;
 }

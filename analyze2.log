@@ -1,0 +1,313 @@
+Backend  : ollama (qwen2.5vl:7b)
+Structure: CTW/Main Gate
+Nodes    : 108 total, 108 with imagery, 62 already analysed
+To do    : 46
+[1/46] node148 ... ok (90s), ~68 min remaining
+[2/46] node43 ... ok (94s), ~67 min remaining
+[3/46] node153 ... ok (52s), ~56 min remaining
+[4/46] node154 ... FAILED: No view could be analysed. front: Model returned nothing for this view - usually another request was using the GPU at the same time. Run analysis one at a time.
+[5/46] node146 ... FAILED: No view could be analysed. front: Model returned nothing for this view - usually another request was using the GPU at the same time. Run analysis one at a time.
+[6/46] node144 ... FAILED: No view could be analysed. front: Model returned nothing for this view - usually another request was using the GPU at the same time. Run analysis one at a time.
+[7/46] node152 ... FAILED: No view could be analysed. front: Model returned nothing for this view - usually another request was using the GPU at the same time. Run analysis one at a time.
+[8/46] node151 ... ok (37s), ~27 min remaining
+[9/46] node59 ... ok (87s), ~29 min remaining
+[10/46] node109 ... ok (95s), ~31 min remaining
+[11/46] node65 ... ok (83s), ~32 min remaining
+[12/46] node68 ... ok (86s), ~33 min remaining
+[13/46] node69 ... ok (84s), ~33 min remaining
+[14/46] node81 ... ok (84s), ~33 min remaining
+[15/46] node73 ... ok (69s), ~32 min remaining
+[16/46] node74 ... ok (76s), ~31 min remaining
+[17/46] node75 ... ok (95s), ~31 min remaining
+[18/46] node77 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node77 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[19/46] node121 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node121 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[20/46] node122 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node122 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[21/46] node119 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node119 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries
+[22/46] node124 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node124 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[23/46] node125 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node125 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 r
+[24/46] node102 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node102 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed
+[25/46] node156 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node156 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[26/46] node127 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node127 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[27/46] node129 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node129 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[28/46] node111 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node111 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[29/46] node157 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node157 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[30/46] node159 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node159 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[31/46] node160 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node160 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+[32/46] node99 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node99 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[33/46] node116 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node116 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation 
+[34/46] node117 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node117 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[35/46] node113 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node113 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory 
+[36/46] node115 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node115 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed aft
+[37/46] node104 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node104 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[38/46] node94 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node94 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBL
+[39/46] node161 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node161 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[40/46] node162 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node162 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[41/46] node107 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node107 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory all
+[42/46] node108 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node108 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation s
+[43/46] node163 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node163 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[44/46] node100 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node100 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[45/46] node105 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node105 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+[46/46] node118 ... FAILED: Command failed: python C:\tactigrid\Tactigridv2\stitch_faces.py C:\tactigrid\Tactigridv2\uploads\CTW\Main Gate\tiles\node118 base64 1024
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+OpenBLAS error: Memory allocation still failed after 10 retries, giving up.
+
+
+Done: 13 analysed, 33 failed, 18 min total.

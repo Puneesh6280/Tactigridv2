@@ -17,7 +17,7 @@ const path = require("path");
 const crypto = require("crypto");
 
 const VALHALLA_URL = process.env.VALHALLA_URL || "https://valhalla1.openstreetmap.de/route";
-const USER_AGENT = "Tactigrid/0.1 (self-hosted site-survey tool)";
+const USER_AGENT = "TAC-GRID/0.1 (self-hosted site-survey tool)";
 const CACHE_DIR = path.join(__dirname, "routecache");
 const MIN_INTERVAL_MS = 600; // be a polite client of a free public service
 

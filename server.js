@@ -10,7 +10,7 @@ const { extractNamedLocations } = require("./namedLocations");
 const { patchExtractedTour } = require("./patchTour");
 const { getTourAnalysis, invalidateTour } = require("./tourCache");
 const geoStore = require("./geoStore");
-const { routeMetres, haversineMetres, coverage } = require("./geoDistance");
+const { routeMetres, haversineMetres, coverage, reachFrom, PACE } = require("./geoDistance");
 const { buildSheet, toCsv, parseSheet } = require("./nodeSheet");
 const sceneDetect = require("./sceneDetect");
 const vlmAnalyze = require("./vlmAnalyze");
@@ -40,16 +40,19 @@ const writePersonnel = (data) => fs.writeFileSync(personnelFilePath, JSON.string
 
 // The dashboards must not render for signed-out visitors, so they are served
 // explicitly behind requireAuth rather than by the static middleware below.
-const protectedPages = ["/admin_dashboard.html", "/user_dashboard.html"];
+const protectedPages = ["/admin_dashboard.html", "/user_dashboard.html", "/tactical.html"];
 protectedPages.forEach((page) => {
     app.get(page, auth.requireAuth, (req, res) => res.sendFile(path.join(__dirname, "public", page)));
 });
 
 // The tour viewer loads this panel script by a fixed URL; serve it with
 // no-cache so panel updates aren't stuck behind the browser cache.
-app.get("/tactigrid-scene.js", (req, res) => {
+// The old name is kept as an alias: tours patched before the rename still
+// carry <script src="/tactigrid-scene.js"> in their HTML, and a re-upload is
+// not something to require just to rename the product.
+app.get(["/tacgrid-scene.js", "/tactigrid-scene.js"], (req, res) => {
     res.set("Cache-Control", "no-cache");
-    res.sendFile(path.join(__dirname, "public", "tactigrid-scene.js"));
+    res.sendFile(path.join(__dirname, "public", "tacgrid-scene.js"));
 });
 
 app.use(express.static("public"));
@@ -111,7 +114,7 @@ app.get("/me", (req, res) => {
 // every form field has been read and validated. Resolving the destination
 // mid-stream from req.body would make the upload depend on field ordering.
 const upload = multer({
-    dest: path.join(os.tmpdir(), "tactigrid-uploads"),
+    dest: path.join(os.tmpdir(), "TAC-GRID-uploads"),
     limits: { fileSize: MAX_UPLOAD_BYTES },
     fileFilter: (req, file, cb) => {
         if (!/\.ggpkg$/i.test(file.originalname)) {
@@ -414,6 +417,7 @@ app.get("/api/tours/:project/:folder/analysis/:nodeId", auth.requireAuth, (req, 
         nodeId,
         analyzed: !!analysis,
         apiConfigured: vlmAnalyze.keyConfigured(),
+        engine: vlmAnalyze.backend().name,
         analysis: analysis || null
     });
 });
@@ -426,10 +430,21 @@ app.post("/api/tours/:project/:folder/analysis/:nodeId", auth.requireAdmin, asyn
     if (!tour.graph.nodes[nodeId]) {
         return res.status(404).json({ success: false, message: "Unknown node id." });
     }
+    // A local model works one cube face at a time and takes minutes, not
+    // seconds — keep the socket open and trace progress to the console.
+    req.setTimeout(0);
+    res.setTimeout(0);
+    const be = vlmAnalyze.backend();
+    console.log(`[vlm] analysing ${nodeId} via ${be.name} (${be.model})`);
+    const started = Date.now();
     try {
-        const analysis = await vlmAnalyze.analyzeNode(tour.project, tour.folder, nodeId);
+        const analysis = await vlmAnalyze.analyzeNode(tour.project, tour.folder, nodeId, (step) =>
+            console.log(`[vlm]   ${nodeId}: ${step}`)
+        );
+        console.log(`[vlm] ${nodeId} done in ${Math.round((Date.now() - started) / 1000)}s`);
         res.json({ success: true, nodeId, analysis });
     } catch (error) {
+        console.error(`[vlm] ${nodeId} failed: ${error.message}`);
         res.status(500).json({ success: false, message: error.message });
     }
 });
@@ -542,6 +557,153 @@ app.get("/api/tours/:project/:folder/geo-distance", auth.requireAuth, (req, res)
         hops: result.hops,
         path: result.path,
         coverage: coverage(tour.graph, geo.nodes)
+    });
+});
+
+// ------------------------------------------------------- reaction analysis
+
+// "If something happens HERE, who can reach it and how fast?"
+//
+// A public mapping service answers point-to-point navigation. It cannot answer
+// this for a closed site: one origin, every surveyed position ranked by real
+// walking time along the site's own paths, grouped into reaction bands. That
+// is response planning - siting a reserve, checking mutual support between
+// sentry positions, judging whether a post can be reinforced in time.
+app.get("/api/tours/:project/:folder/reaction", auth.requireAuth, async (req, res) => {
+    const tour = loadTour(req, res);
+    if (!tour) return;
+
+    const from = req.query.from || tour.graph.startNode;
+    const pace = PACE[req.query.pace] || PACE.walk;
+    // Valhalla follows real mapped paths and needs only the two endpoints
+    // placed. The hotspot graph needs every junction along the way placed too,
+    // and with 11 of 108 surveyed that reaches almost nothing - so real paths
+    // are the default and the graph is opt-in for cross-checking.
+    const mode = req.query.mode === "graph" ? "graph" : "paths";
+
+    const geo = geoStore.getGeo(tour.project, tour.folder);
+    if (!geo.nodes[from]) {
+        return res.status(400).json({ success: false, message: "That origin has not been placed on the map yet." });
+    }
+
+    const names = {};
+    for (const loc of extractNamedLocations(tour.graph, tour.layout.positions)) {
+        if (!names[loc.nodeId]) names[loc.nodeId] = loc.displayName;
+    }
+
+    const banded = (seconds) =>
+        seconds <= 30 ? "immediate" : seconds <= 60 ? "under1min" : seconds <= 120 ? "under2min" : "beyond";
+
+    let reached = [];
+    let unreachable = [];
+
+    if (mode === "graph") {
+        const result = reachFrom(tour.graph, geo.nodes, from);
+        if (result.error) {
+            return res.status(400).json({ success: false, message: result.error, coverage: coverage(tour.graph, geo.nodes) });
+        }
+        reached = result.reached
+            .filter((r) => geo.nodes[r.nodeId])
+            .map((r) => ({
+                nodeId: r.nodeId,
+                name: names[r.nodeId] || r.nodeId,
+                metres: Math.round(r.metres),
+                seconds: Math.round(r.metres / pace),
+                band: banded(r.metres / pace),
+                hops: r.hops,
+                lat: geo.nodes[r.nodeId].lat,
+                lon: geo.nodes[r.nodeId].lon
+            }));
+    } else {
+        const targets = Object.keys(geo.nodes).filter((id) => id !== from);
+        for (const id of targets) {
+            try {
+                const r = await valhalla.route(geo.nodes[from], geo.nodes[id], "pedestrian");
+                // Time is derived from distance and the chosen pace rather than
+                // taken from Valhalla, so the pace selector actually means
+                // something and every row uses one consistent assumption.
+                const seconds = r.metres / pace;
+                reached.push({
+                    nodeId: id,
+                    name: names[id] || id,
+                    metres: r.metres,
+                    seconds: Math.round(seconds),
+                    band: banded(seconds),
+                    lat: geo.nodes[id].lat,
+                    lon: geo.nodes[id].lon,
+                    shape: r.shape,
+                    cached: !!r.cached
+                });
+            } catch (err) {
+                unreachable.push({ nodeId: id, name: names[id] || id, reason: err.message });
+            }
+        }
+        reached.sort((a, b) => a.metres - b.metres);
+    }
+
+    res.json({
+        success: true,
+        mode,
+        origin: { nodeId: from, name: names[from] || from, lat: geo.nodes[from].lat, lon: geo.nodes[from].lon },
+        paceMetresPerSecond: pace,
+        paceName: PACE[req.query.pace] ? req.query.pace : "walk",
+        bands: {
+            immediate: reached.filter((r) => r.band === "immediate").length,
+            under1min: reached.filter((r) => r.band === "under1min").length,
+            under2min: reached.filter((r) => r.band === "under2min").length,
+            beyond: reached.filter((r) => r.band === "beyond").length
+        },
+        reached,
+        unreachable,
+        coverage: coverage(tour.graph, geo.nodes)
+    });
+});
+
+// Site-wide rollup: what is surveyed, what is analysed, and what the analysis
+// says is hidden. Answers "where is this site weakest?" in one call.
+app.get("/api/tours/:project/:folder/overview", auth.requireAuth, (req, res) => {
+    const tour = loadTour(req, res);
+    if (!tour) return;
+
+    const geo = geoStore.getGeo(tour.project, tour.folder);
+    const names = {};
+    for (const loc of extractNamedLocations(tour.graph, tour.layout.positions)) {
+        if (!names[loc.nodeId]) names[loc.nodeId] = loc.displayName;
+    }
+
+    const nodes = Object.keys(tour.graph.nodes).map((id) => {
+        const analysis = vlmAnalyze.getAnalysis(tour.project, tour.folder, id);
+        const dirs = analysis && analysis.directions ? Object.values(analysis.directions) : [];
+        // Count only entries that actually say something - a field reading
+        // "none obvious" is an absence of analysis, not a finding of none.
+        const said = (v) => {
+            const s = String(v || "").trim();
+            return s && !/^\s*(none|no\b|not\b|n\/a)/i.test(s);
+        };
+        return {
+            nodeId: id,
+            name: names[id] || null,
+            placed: !!geo.nodes[id],
+            analysed: !!analysis,
+            blindSpotMentions: dirs.filter((d) => said(d.blindSpots)).length,
+            hazardMentions: dirs.filter((d) => said(d.hazards)).length,
+            coverMentions: dirs.filter((d) => said(d.cover)).length,
+            directionsAnalysed: dirs.length
+        };
+    });
+
+    res.json({
+        success: true,
+        project: tour.project,
+        folder: tour.folder,
+        totals: {
+            nodes: nodes.length,
+            placed: nodes.filter((n) => n.placed).length,
+            analysed: nodes.filter((n) => n.analysed).length,
+            named: nodes.filter((n) => n.name).length,
+            pins: geo.pins.length
+        },
+        nodes
     });
 });
 

@@ -36,8 +36,8 @@ function verifyPassword(password, salt, expectedHash) {
 function ensureUsersFile() {
   if (fs.existsSync(usersFilePath)) return;
 
-  const adminPw = process.env.TACTIGRID_ADMIN_PASSWORD || "admin123";
-  const userPw = process.env.TACTIGRID_USER_PASSWORD || "user123";
+  const adminPw = process.env.TACGRID_ADMIN_PASSWORD || "admin123";
+  const userPw = process.env.TACGRID_USER_PASSWORD || "user123";
 
   const seeded = {
     admin: { role: "admin", ...hashPassword(adminPw) },
@@ -45,7 +45,7 @@ function ensureUsersFile() {
   };
   fs.writeFileSync(usersFilePath, JSON.stringify(seeded, null, 2));
 
-  if (!process.env.TACTIGRID_ADMIN_PASSWORD) {
+  if (!process.env.TACGRID_ADMIN_PASSWORD) {
     console.warn(
       "\n[auth] users.json created with the OLD DEFAULT passwords (admin123 / user123).\n" +
       "[auth] These were committed to git and must be considered public.\n" +

@@ -1,0 +1,115 @@
+Backend  : ollama (qwen2.5vl:7b)
+Structure: CTW/Main Gate
+Nodes    : 108 total, 108 with imagery, 2 already analysed
+To do    : 106
+Preserved: 2 node(s) from another model, not overwritten (--force-all to override)
+           node56 (seeded-from-imagery (regenerate via API once ANTHROPIC_API_KEY is set))
+           node12 (google/gemma-4-26b-a4b-it:free)
+[1/106] node15 ... ok (86s), ~151 min remaining
+[2/106] node16 ... ok (97s), ~159 min remaining
+[3/106] node82 ... ok (97s), ~160 min remaining
+[4/106] node53 ... ok (121s), ~171 min remaining
+[5/106] node167 ... ok (120s), ~176 min remaining
+[6/106] node165 ... ok (146s), ~185 min remaining
+[7/106] node166 ... ok (145s), ~192 min remaining
+[8/106] node87 ... ok (163s), ~199 min remaining
+[9/106] node52 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[10/106] node18 ... ok (162s), ~182 min remaining
+[11/106] node90 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[12/106] node24 ... ok (172s), ~181 min remaining
+[13/106] node26 ... ok (149s), ~183 min remaining
+[14/106] node89 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[15/106] node48 ... ok (139s), ~172 min remaining
+[16/106] node28 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[17/106] node135 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[18/106] node136 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[19/106] node32 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[20/106] node45 ... ok (151s), ~150 min remaining
+[21/106] node34 ... ok (177s), ~153 min remaining
+[22/106] node7 ... ok (151s), ~154 min remaining
+[23/106] node36 ... ok (167s), ~156 min remaining
+[24/106] node4 ... ok (160s), ~157 min remaining
+[25/106] node164 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[26/106] node37 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[27/106] node141 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[28/106] node140 ... ok (182s), ~140 min remaining
+[29/106] node8 ... ok (152s), ~140 min remaining
+[30/106] node148 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[31/106] node43 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[32/106] node153 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[33/106] node154 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[34/106] node143 ... ok (167s), ~119 min remaining
+[35/106] node142 ... ok (141s), ~119 min remaining
+[36/106] node146 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[37/106] node144 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[38/106] node49 ... ok (158s), ~111 min remaining
+[39/106] node57 ... ok (152s), ~111 min remaining
+[40/106] node152 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[41/106] node151 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[42/106] node149 ... ok (143s), ~105 min remaining
+[43/106] node84 ... ok (163s), ~105 min remaining
+[44/106] node59 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[45/106] node60 ... ok (144s), ~101 min remaining
+[46/106] node110 ... ok (157s), ~100 min remaining
+[47/106] node109 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[48/106] node63 ... ok (168s), ~97 min remaining
+[49/106] node64 ... ok (141s), ~97 min remaining
+[50/106] node65 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[51/106] node85 ... ok (170s), ~94 min remaining
+[52/106] node68 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[53/106] node69 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[54/106] node80 ... ok (136s), ~88 min remaining
+[55/106] node81 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[56/106] node101 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[57/106] node51 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[58/106] node72 ... ok (154s), ~80 min remaining
+[59/106] node73 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[60/106] node74 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[61/106] node75 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[62/106] node76 ... ok (160s), ~72 min remaining
+[63/106] node77 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[64/106] node78 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[65/106] node79 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[66/106] node92 ... ok (159s), ~65 min remaining
+[67/106] node155 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[68/106] node121 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[69/106] node122 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[70/106] node123 ... ok (150s), ~57 min remaining
+[71/106] node119 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[72/106] node124 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[73/106] node125 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[74/106] node126 ... ok (158s), ~51 min remaining
+[75/106] node102 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[76/106] node156 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[77/106] node127 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[78/106] node128 ... ok (137s), ~44 min remaining
+[79/106] node129 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[80/106] node111 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[81/106] node157 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[82/106] node158 ... ok (160s), ~37 min remaining
+[83/106] node159 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[84/106] node160 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[85/106] node99 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[86/106] node98 ... ok (154s), ~31 min remaining
+[87/106] node116 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[88/106] node117 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[89/106] node93 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[90/106] node112 ... ok (138s), ~24 min remaining
+[91/106] node113 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[92/106] node115 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[93/106] node104 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[94/106] node97 ... ok (156s), ~18 min remaining
+[95/106] node94 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[96/106] node161 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[97/106] node162 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[98/106] node106 ... ok (143s), ~12 min remaining
+[99/106] node107 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[100/106] node108 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[101/106] node163 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[102/106] node103 ... ok (160s), ~6 min remaining
+[103/106] node100 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[104/106] node105 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[105/106] node118 ... FAILED: Model returned nothing (likely context overflow at num_ctx=8192). Raise TACTIGRID_VLM_NUM_CTX or lower the image size.
+[106/106] node120 ... ok (69s), ~0 min remaining
+
+Done: 44 analysed, 62 failed, 154 min total.

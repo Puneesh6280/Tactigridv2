@@ -15,7 +15,7 @@ const fs = require("fs");
 const path = require("path");
 
 const TILE_ROOT = path.join(__dirname, "tilecache");
-const USER_AGENT = "Tactigrid/0.1 (self-hosted site-survey tool)";
+const USER_AGENT = "TAC-GRID/0.1 (self-hosted site-survey tool)";
 const FETCH_DELAY_MS = 550; // stay well under OSM's rate expectations
 const MAX_TILES_PER_PREFETCH = 1500;
 

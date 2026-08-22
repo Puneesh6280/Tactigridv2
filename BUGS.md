@@ -1,4 +1,4 @@
-# Tactigrid — Bug & Cleanup Backlog
+# TAC-GRID — Bug & Cleanup Backlog
 
 > **Status: all 19 items fixed and verified (2026-07-20).**
 > Verified by two automated suites (29 + 14 assertions) plus browser testing.

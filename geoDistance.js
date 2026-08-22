@@ -103,4 +103,68 @@ function routeMetres(graph, nodeCoords, fromId, toId) {
   };
 }
 
-module.exports = { haversineMetres, routeMetres, coverage };
+// One-to-many version of the walk above: real ground distance from a single
+// origin to EVERY node it can reach, in one pass.
+//
+// This answers a different question from routeMetres, and one a public mapping
+// service cannot answer at all for a closed site: "if something happens here,
+// who can get to it, and how long does each of them take?" That is reaction
+// planning rather than navigation.
+//
+// Kept separate from routeMetres rather than refactoring it into a shared core,
+// because routeMetres is on the live routing path and is not worth destabilising.
+function reachFrom(graph, nodeCoords, fromId) {
+  if (!graph.nodes[fromId]) return { error: `Unknown origin node: ${fromId}` };
+  if (!nodeCoords[fromId]) return { error: "The origin has not been placed on the map yet." };
+
+  const adj = buildAdjacency(graph);
+  const dist = new Map([[fromId, 0]]);
+  const prev = new Map();
+  const visited = new Set();
+
+  for (;;) {
+    let current = null;
+    let best = Infinity;
+    for (const [id, d] of dist) {
+      if (!visited.has(id) && d < best) { best = d; current = id; }
+    }
+    if (current === null) break;
+    visited.add(current);
+
+    for (const neighbour of adj.get(current) || []) {
+      const a = nodeCoords[current];
+      const b = nodeCoords[neighbour];
+      if (!a || !b) continue; // unsurveyed leg - not measurable
+      const candidate = best + haversineMetres(a, b);
+      if (!dist.has(neighbour) || candidate < dist.get(neighbour)) {
+        dist.set(neighbour, candidate);
+        prev.set(neighbour, current);
+      }
+    }
+  }
+
+  const pathTo = (id) => {
+    const out = [id];
+    let cur = id;
+    while (prev.has(cur)) { cur = prev.get(cur); out.push(cur); }
+    return out.reverse();
+  };
+
+  const reached = [];
+  for (const [id, metres] of dist) {
+    if (id === fromId) continue;
+    reached.push({ nodeId: id, metres, hops: pathTo(id).length - 1, path: pathTo(id) });
+  }
+  reached.sort((a, b) => a.metres - b.metres);
+  return { from: fromId, reached };
+}
+
+// Walking speeds in metres/second. Deliberately conservative: these are
+// planning figures on made paths, not a promise about a specific person.
+const PACE = {
+  walk: 1.35,      // normal walking pace
+  brisk: 2.0,      // purposeful / loaded
+  double: 3.3      // double time
+};
+
+module.exports = { haversineMetres, routeMetres, coverage, reachFrom, PACE };

@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+/* Self-hosted: the app has to render identically with no connection, and a
+   Google Fonts import is a hard dependency on the network at page load.
+   Regenerate with the fetch described in RUNBOOK.md if the fonts change. */
+@import url('vendor/fonts/fonts.css');
 
 :root {
     --bg: #060a09;
@@ -337,6 +340,28 @@ a {
 .sign-out:hover {
     border-color: var(--border-strong);
     color: var(--mint);
+}
+
+/* Entry point to the reaction-analysis view. Deliberately the most prominent
+   thing in the top bar: it is the capability that distinguishes this tool,
+   and it previously had no link at all - the page was reachable only by
+   typing its URL. */
+.nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    letter-spacing: 0.05em;
+    background: rgba(52, 211, 153, 0.12);
+    border: 1px solid var(--mint);
+    color: var(--mint);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    background: rgba(52, 211, 153, 0.22);
 }
 
 .workspace {

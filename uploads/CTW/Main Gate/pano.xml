@@ -3847,7 +3847,7 @@
     <vr skinbuttonposition="0" toggleskinbutton="1" defaulthsscale="100"/>
   </panorama>
   <masternode>
-    <userdata comment="" description="" tags="" title="TACTIGRID" author="" copyright=""/>
+    <userdata comment="" description="" tags="" title="TAC-GRID" author="" copyright=""/>
     <animationsequences>
       <sequence title="Animation01"/>
     </animationsequences>

@@ -38,6 +38,15 @@ function parseCoords(raw) {
     return null;
 }
 
+// Escape before interpolating anything server-supplied into innerHTML. The
+// detector's class names are a fixed vocabulary, but node ids come from an
+// uploaded tour file, so they are not ours to trust.
+function escapeHtml(value) {
+    return String(value == null ? "" : value).replace(/[&<>"']/g, (c) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+}
+
 // ---------------------------------------------------------------- toasts
 
 function toast(message, kind = "info", ttl = 4000) {
@@ -592,6 +601,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="distance-result" id="distanceResult">Pick a structure to begin.</div>
 
                 <button class="btn btn-primary" id="openTourBtn" style="display: none; width: 100%; margin-top: 12px;">OPEN TOUR &rarr;</button>
+                <button class="btn" id="detectBtn" style="display: none; width: 100%; margin-top: 8px;">DETECT OBJECTS AT THIS POSITION</button>
+                <div id="sceneResult" style="display: none; margin-top: 10px; font-size: 0.82em; line-height: 1.6;"></div>
             </div>
         `;
         document.body.appendChild(overlay);
@@ -614,7 +625,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const g = (id) => document.getElementById(id);
             // All the compact controls go left; the map alone goes right and is
             // made sticky (in CSS) so it stays visible while the controls scroll.
-            ["distanceSelect", "distanceResult", "openTourBtn", "routePanel", "placePanel"].forEach((id) => {
+            ["distanceSelect", "distanceResult", "openTourBtn", "detectBtn", "sceneResult", "routePanel", "placePanel"].forEach((id) => {
                 const el = g(id);
                 if (el) left.appendChild(el);
             });
@@ -630,6 +641,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const distanceTitle = document.getElementById("distanceTitle");
         const distanceClose = document.getElementById("distanceClose");
         const openTourBtn = document.getElementById("openTourBtn");
+        const detectBtn = document.getElementById("detectBtn");
+        const sceneResult = document.getElementById("sceneResult");
         const renameStructureBtn = document.getElementById("renameStructureBtn");
         const renameForm = document.getElementById("renameForm");
         const renameLocation = document.getElementById("renameLocation");
@@ -1288,7 +1301,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         // Tactical scene analysis now lives only in the 3D pano viewer's live
-        // panel (public/tactigrid-scene.js), so there is no scene panel here.
+        // panel (public/tacgrid-scene.js), so there is no scene panel here.
 
         const loadStructureLocations = async (project, folder) => {
             currentProject = project;
@@ -1298,6 +1311,8 @@ document.addEventListener("DOMContentLoaded", function () {
             distanceSelect.innerHTML = '<option value="">Choose a starting location...</option>';
             distanceSelect.style.display = "block";
             openTourBtn.style.display = "block";
+            detectBtn.style.display = "block";
+            sceneResult.style.display = "none";
             updateOpenTourLabel();
 
             try {
@@ -1347,6 +1362,8 @@ document.addEventListener("DOMContentLoaded", function () {
             distanceSelect.innerHTML = '<option value="">Choose a starting location...</option>';
             distanceSelect.style.display = "none";
             openTourBtn.style.display = "none";
+            detectBtn.style.display = "none";
+            sceneResult.style.display = "none";
             renameStructureBtn.style.display = "none";
             reuploadStructureBtn.style.display = "none";
             deleteStructureBtn.style.display = "none";
@@ -1532,6 +1549,85 @@ document.addEventListener("DOMContentLoaded", function () {
                 `/uploads/${encodeURIComponent(currentProject)}/${encodeURIComponent(currentFolder)}/index.html${hash}`,
                 "_blank"
             );
+        });
+
+        // Object detection (YOLO) for the selected position. Distinct from the
+        // tactical scene readout in the tour viewer: this recognises common
+        // physical objects - people, vehicles, furniture - and nothing else.
+        function renderScene(scene, nodeId, fromCache) {
+            if (!scene || !scene.summary || !scene.summary.length) {
+                sceneResult.innerHTML =
+                    `<span style="color: var(--text-dim);">No recognisable objects at ${escapeHtml(nodeId)}. ` +
+                    `The detector knows about 80 everyday object types - doors, windows and terrain are not among them.</span>`;
+                sceneResult.style.display = "block";
+                return;
+            }
+            const chips = scene.summary
+                .map((s) => `<b>${escapeHtml(String(s.count))}</b> &times; ${escapeHtml(s.label)}`)
+                .join(" &nbsp;·&nbsp; ");
+            const byDir = (scene.faces || [])
+                .filter((f) => f.detections && f.detections.length)
+                .map((f) => `${escapeHtml(f.direction)}: ${f.detections.map((d) => escapeHtml(d.label)).join(", ")}`)
+                .join("<br>");
+            sceneResult.innerHTML =
+                `<div style="color: var(--mint); font-family: var(--font-mono); font-size: 0.9em; letter-spacing:.06em;">` +
+                `${scene.objectCount} OBJECT(S) AT ${escapeHtml(nodeId).toUpperCase()}${fromCache ? " · CACHED" : ""}</div>` +
+                `<div style="margin-top:6px;">${chips}</div>` +
+                (byDir ? `<div style="margin-top:8px; color: var(--text-dim);">${byDir}</div>` : "") +
+                `<div style="margin-top:8px; color: var(--text-dim); font-size:.92em;">` +
+                `General objects only - for doors, cover and blind spots use the tactical panel inside the tour.</div>`;
+            sceneResult.style.display = "block";
+        }
+
+        function selectedNodeId() {
+            const loc = currentLocations[selectedIndex];
+            return loc ? loc.nodeId : null;
+        }
+
+        // Show a cached result immediately when the location changes, so the
+        // button does not have to be pressed to see work already done.
+        async function showCachedScene() {
+            const nodeId = selectedNodeId();
+            sceneResult.style.display = "none";
+            if (!nodeId || !currentProject || !currentFolder) return;
+            try {
+                const r = await api(
+                    `/api/tours/${encodeURIComponent(currentProject)}/${encodeURIComponent(currentFolder)}/scene/${encodeURIComponent(nodeId)}`
+                );
+                const data = await r.json();
+                if (data.success && data.analyzed) renderScene(data.scene, nodeId, true);
+            } catch { /* a missing cached result is not worth reporting */ }
+        }
+
+        distanceSelect.addEventListener("change", showCachedScene);
+
+        detectBtn.addEventListener("click", async () => {
+            const nodeId = selectedNodeId();
+            if (!nodeId) {
+                toast("Choose a starting location first.", "error", 4000);
+                return;
+            }
+            detectBtn.disabled = true;
+            const original = detectBtn.textContent;
+            detectBtn.textContent = "DETECTING...";
+            sceneResult.style.display = "none";
+            try {
+                const r = await api(
+                    `/api/tours/${encodeURIComponent(currentProject)}/${encodeURIComponent(currentFolder)}/scene/${encodeURIComponent(nodeId)}`,
+                    { method: "POST" }
+                );
+                const data = await r.json();
+                if (!data.success) {
+                    toast(data.message || "Detection failed.", "error", 8000);
+                    return;
+                }
+                renderScene(data.scene, nodeId, false);
+            } catch (err) {
+                toast("Detection failed - is the server still running?", "error", 6000);
+            } finally {
+                detectBtn.disabled = false;
+                detectBtn.textContent = original;
+            }
         });
 
         projectGroups.addEventListener("click", (e) => {

@@ -2,12 +2,15 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "tactigrid-server",
-      "runtimeExecutable": "C:\\Users\\DELL\\AppData\\Local\\OpenAI\\Codex\\bin\\node.exe",
+      "name": "TAC-GRID-server",
+      "runtimeExecutable": "node",
       "runtimeArgs": ["server.js"],
       "port": 3000,
       "env": {
-        "TACTIGRID_PYTHON": "C:\\Users\\DELL\\AppData\\Local\\Programs\\Python\\Python313\\python.exe"
+        "TACGRID_PYTHON": "python",
+        "TACGRID_VLM_BACKEND": "ollama",
+        "TACGRID_OLLAMA_MODEL": "qwen2.5vl:7b",
+        "OLLAMA_HOST": "http://127.0.0.1:11434"
       }
     }
   ]
